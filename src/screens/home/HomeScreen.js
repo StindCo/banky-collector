@@ -66,8 +66,8 @@ function HomeScreen() {
       </View>
       <View className=" px-5 py-5 mb-10 space-y-1 ">
         <View className="flex space-y-2">
-          <Text className="text-lg text-white font-[Poppins]">Bonjour, </Text>
-          <Text className="text-2xl text-white truncate font-[PoppinsBold] text-wrap font-medium">
+          <Text className="text-sm text-white font-[Poppins]">Bonjour, </Text>
+          <Text className="text-lg text-white truncate font-[PoppinsBold] text-wrap font-medium">
             {user.displayName}
           </Text>
         </View>
