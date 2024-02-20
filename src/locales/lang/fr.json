@@ -1,0 +1,15 @@
+{
+    "nav": {
+        "home": "Tableau de bord",
+        "wallets": "Portefeuilles",
+        "deposit": "Dépôt",
+        "withdrawal": "Retrait",
+        "transactions": "Transactions",
+        "help": "Centre d'assistance",
+        "setting": "Paramètres"
+    },
+    "morning": "Bonjour",
+    "afternoon": "Bonsoir",
+    "having": "Vous avez",
+    "active_account": "Compte actif"
+}

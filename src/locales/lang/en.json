@@ -1,0 +1,15 @@
+{
+    "nav": {
+        "home": "Home",
+        "wallets": "Wallets",
+        "deposit": "Deposit",
+        "withdrawal": "Withdrawal",
+        "transactions": "Transactions",
+        "help": "Help",
+        "setting": "Setting"
+    },
+    "morning": "Good morning",
+    "afternoon": "Good afternoon",
+    "having": "You have",
+    "active_account": "Active account"
+}

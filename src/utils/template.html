@@ -1,0 +1,126 @@
+<html>
+  <head>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"
+    />
+    <style>
+      body {
+        font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+          "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+      }
+      #customers {
+        font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+          "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        text-align: center;
+      }
+
+      #customers td,
+      #customers th {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+      }
+
+      #customers tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+
+      #customers th {
+        padding-top: 12px;
+        text-align: center;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #555;
+        color: white;
+      }
+    </style>
+  </head>
+  <body style="padding: 0 5%">
+    <div className="flex flex-col justify-between gap-4 mb-8">
+      <Headers title="Journal de compte" />
+      <div
+        className="flex flex-row justify-between items-center"
+        style="
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        "
+      >
+        <div className="w-full" style="width: 70%">
+          <h2>Information du compte</h2>
+          <div style="display: flex; flex-direction: row; flex-grow: 0.6">
+            <span style="width: 30%">Id du compte :</span>
+            <span>{account[0]?.id}</span>
+          </div>
+          <div style="display: flex; flex-direction: row; flex-grow: 0.6">
+            <span style="width: 30%">Id du client :</span>
+            <span>{account[0]?.holderId}</span>
+          </div>
+
+          <div style="display: flex; flex-direction: row; flex-grow: 0.6">
+            <span style="width: 30%">Intitulé du compte :</span>
+            <span>{account[0]?.name}</span>
+          </div>
+
+          <div style="display: flex; flex-direction: row; flex-grow: 0.6">
+            <span style="width: 30%">Numéro de compte :</span>
+            <span>{account[0]?.accountNumber}</span>
+          </div>
+
+          <div style="display: flex; flex-direction: row; flex-grow: 0.6">
+            <span style="width: 30%">Devise :</span>
+            <span>{returnLabel(currencies, account[0]?.currency)}</span>
+          </div>
+
+          <div style="display: flex; flex-direction: row; flex-grow: 0.6">
+            <span style="width: 30%">Produit :</span>
+            <span>{returnLabel(products, account[0]?.profileId)}</span>
+          </div>
+
+          <div style="display: flex; flex-direction: row; flex-grow: 0.6">
+            <span style="width: 30%">Balance :</span>
+            <span>{account[0]?.balance}</span>
+          </div>
+        </div>
+      </div>
+
+      <br />
+
+      <div style="display: none">
+        <span>Du {period?.start}</span>
+        <span>Au {period?.end}</span>
+      </div>
+
+      <table id="customers">
+        <tr>
+          <th>Date</th>
+          <th>N° Transaction</th>
+          <th>Motif</th>
+          <th>Débit (USD)</th>
+          <th>Crédit (USD)</th>
+          <th>Solde</th>
+        </tr>
+
+        <tr>
+          <td>Date</td>
+          <td>N° Transaction</td>
+          <td>Un long motif pour tester ma patience</td>
+          <td>Débit (USD)</td>
+          <td>Crédit (USD)</td>
+          <td>Solde</td>
+        </tr>
+        <tr>
+          <td>Date</td>
+          <td>N° Transaction</td>
+          <td>Motif</td>
+          <td>Débit (USD)</td>
+          <td>Crédit (USD)</td>
+          <td>Solde</td>
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>
