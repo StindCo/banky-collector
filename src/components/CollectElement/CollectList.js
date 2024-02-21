@@ -1,19 +1,19 @@
 import { View, Text } from "react-native";
 import React from "react";
 import { ActivityIndicator } from "react-native";
-import Entry from "./Entry";
+import Collect from "./Collect";
 
-export default function EntryList({
-  transactions = [],
+export default function CollectList({
+  collects = [],
   isTransactionLoading = false,
-  bgStyle = null
+  bgStyle = null,
 }) {
   return (
     <>
       {isTransactionLoading ? (
         <View className="space-y-3">
-          {transactions.map((value, index) => (
-            <Entry bgStyle={bgStyle} entry={value} key={index} />
+          {collects.map((value, index) => (
+            <Collect bgStyle={bgStyle} collect={value} key={index} />
           ))}
         </View>
       ) : (

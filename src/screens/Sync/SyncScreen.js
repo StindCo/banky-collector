@@ -20,7 +20,7 @@ import CardList from "../../components/Card/CardList";
 import { useSelector } from "react-redux";
 import { apiGetAccountsOfUser } from "../../services/AccountServices";
 
-function AccountsScreen() {
+function SyncScreen() {
   const os = Platform.OS;
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
@@ -49,53 +49,15 @@ function AccountsScreen() {
           className={`flex w-full mt-14 h-full ${os === "ios" ? "mt-16" : ""}`}
         >
           <View className="flex-row justify-between items-center pb-3 px-5">
-            <View className="w-1/4">
-              <View
-                className={`w-9 h-9 rounded-full border border-indigo-950 `}
-              >
-                <Image
-                  source={require("../../../assets/favicon.png")}
-                  className={`w-9 h-9 rounded-full`}
-                />
-              </View>
-            </View>
+            <View className="w-1/4"></View>
 
             <View className="w-2/4">
               <Text className="text-base text-center font-[Poppins] text-black">
-                Mes comptes
+                Synchronisation
               </Text>
             </View>
-            <View className="w-1/4 ">
-              <TouchableOpacity
-                className="flex items-end justify-end"
-                onPress={() => setShowSearchBar(!showSearchBar)}
-              >
-                <MagnifyingGlassCircleIcon color="#000064" size="38" />
-              </TouchableOpacity>
-            </View>
+            <View className="w-1/4 "></View>
           </View>
-
-          {showSearchBar && (
-            <View className="px-5 mt-5">
-              <TextInput
-                onChangeText={setFilterText}
-                value={filterText}
-                placeholder="Rechercher un compte"
-                className="h-[45px] border pb-1.5 text-base rounded-lg px-3 border-gray-300 text-gray-800"
-              />
-            </View>
-          )}
-          <ScrollView className="space-y-4 px-5 mt-5">
-            <View>
-              <CardList
-                isAccountLoad={isAccountLoading}
-                accounts={accounts}
-                filterText={filterText}
-              />
-            </View>
-
-            <View className="py-14"></View>
-          </ScrollView>
         </View>
       ) : (
         <Loader loading={loading} />
@@ -104,4 +66,4 @@ function AccountsScreen() {
   );
 }
 
-export default AccountsScreen;
+export default SyncScreen;

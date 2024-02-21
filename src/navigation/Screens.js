@@ -1,14 +1,5 @@
 import * as React from "react";
-import {
-  AccountScreen,
-  AccountsScreen,
-  HomeScreen,
-  LoginScreen,
-  NotificationScreen,
-  OtpScreen,
-  SettingsScreen,
-  TransferScreen,
-} from "../index";
+import { HomeScreen, LoginScreen, NotificationScreen } from "../index";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
@@ -18,8 +9,6 @@ import {
 } from "react-native-heroicons/solid";
 import { Platform, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import ReviewScreen from "../screens/transfer/ReviewScreen";
-import ValidationScreen from "../screens/transfer/ValidationScreen";
 import { apiGetAccountProfiles } from "../services/operationsProfile";
 import { loadAccountProfiles } from "../store/Account/accountSlice";
 import ChangePasswordScreen from "../screens/settings/ChangePasswordScreen";
@@ -29,6 +18,9 @@ import {
   QrCodeIcon,
 } from "react-native-heroicons/outline";
 import ReportScreen from "../screens/report/ReportScreen";
+import SyncScreen from "../screens/Sync/SyncScreen";
+import ReviewScreen from "../screens/newCollect/ReviewScreen";
+import ValidationScreen from "../screens/newCollect/ValidationScreen";
 
 const Stack = createNativeStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -55,16 +47,16 @@ function Screens() {
             if (route.name === "Home") return <PlusIcon color={color} />;
             if (route.name === "Report")
               return <DocumentChartBarIcon size={28} color={color} />;
-            if (route.name === "Accounts") return <QrCodeIcon color={color} />;
+            if (route.name === "Sync") return <QrCodeIcon color={color} />;
           },
           tabBarActiveTintColor: "#000064",
           tabBarShowLabel: false,
         })}
       >
         <BottomTab.Screen
-          name="Accounts"
-          component={AccountsScreen}
-          options={{ tabBarLabel: "Portefeuilles" }}
+          name="Sync"
+          component={SyncScreen}
+          options={{ tabBarLabel: "Synchronisation" }}
         />
         <BottomTab.Screen
           name="Home"
@@ -72,7 +64,7 @@ function Screens() {
           options={{
             tabBarIcon: ({ color, focused }) => (
               <View
-                className={`absolute border bottom-2 border-white shadow-lg p-5 rounded-full ${
+                className={`absolute border bottom-3 border-white shadow-lg p-4 rounded-full ${
                   !focused ? "bg-white" : "bg-indigo-950 border-gray-200"
                 }`}
               >
@@ -96,8 +88,6 @@ function Screens() {
     >
       {session.signedIn ? (
         <>
-          <Stack.Screen name="Account" component={AccountScreen} />
-          <Stack.Screen name="Transfer" component={TransferScreen} />
           <Stack.Screen name="Review" component={ReviewScreen} />
           <Stack.Screen name="Validation" component={ValidationScreen} />
           <Stack.Screen

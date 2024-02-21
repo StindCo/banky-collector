@@ -2,6 +2,7 @@ import { useNavigation } from "@react-navigation/core";
 import * as React from "react";
 import { View, Text, Image } from "react-native";
 import { useSelector } from "react-redux";
+import { getSelectedOperationTextByTag } from "../../screens/home/HomeScreen";
 
 const getAccountTypeName = (label) => {
   switch (label) {
@@ -18,20 +19,9 @@ const getAccountTypeName = (label) => {
 };
 
 function Card(props) {
-  const { name, accountNumber, balance, currency, className, profileId } =
+  const { amount, currency, nbrCollect, className, profileId, typeOperation } =
     props;
   const navigation = useNavigation();
-
-  const accountProfiles = useSelector((state) => state.account.accountProfiles);
-  const [typeOfAccount, setTypeOfAccount] = React.useState({});
-
-  React.useEffect(() => {
-    let profileOfAccount = accountProfiles.filter(
-      (profile) => profile.id == profileId
-    )[0];
-
-    setTypeOfAccount(profileOfAccount);
-  }, [accountProfiles]);
 
   // console.log(accountProfiles);
 
@@ -49,7 +39,7 @@ function Card(props) {
               Montant perçu
             </Text>
             <Text className="text-xl font-[PoppinsBold] text-white">
-              700 USD
+              {amount} {currency}
             </Text>
           </View>
         </View>
@@ -58,7 +48,7 @@ function Card(props) {
             Nombre de collectes
           </Text>
           <Text className="font-medium font-[PoppinsBold] text-base text-white">
-            18
+            {nbrCollect}
           </Text>
         </View>
         {/* <View>
@@ -78,7 +68,7 @@ function Card(props) {
 
         <View>
           <Text className="font-[Poppins] text-xs text-center uppercase text-white">
-            Epargne
+            {getSelectedOperationTextByTag(typeOperation)}
           </Text>
         </View>
       </View>
