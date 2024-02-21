@@ -29,18 +29,6 @@ function SyncScreen() {
   const [isAccountLoading, setIsAccountLoading] = useState(false);
 
   const user = useSelector((state) => state.auth.user);
-  const [accounts, setAccounts] = React.useState([]);
-
-  const getAccounts = async (holderId) => {
-    setIsAccountLoading(false);
-    const { data } = await apiGetAccountsOfUser(holderId ?? "");
-    setAccounts(data);
-    setIsAccountLoading(true);
-  };
-
-  React.useEffect(() => {
-    getAccounts(user.customer.id);
-  }, [user]);
 
   return (
     <>

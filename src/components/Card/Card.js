@@ -2,7 +2,6 @@ import { useNavigation } from "@react-navigation/core";
 import * as React from "react";
 import { View, Text, Image } from "react-native";
 import { useSelector } from "react-redux";
-import { getSelectedOperationTextByTag } from "../../screens/home/HomeScreen";
 
 const getAccountTypeName = (label) => {
   switch (label) {
@@ -17,6 +16,13 @@ const getAccountTypeName = (label) => {
       break;
   }
 };
+
+const getSelectedOperationTextByTag = (tag) => {
+  if (tag == "saving") return "Epargne";
+  else if (tag == "saving_card") return "Buakisa carte";
+  else if (tag == "loan") return "Crédit";
+};
+
 
 function Card(props) {
   const { amount, currency, nbrCollect, className, profileId, typeOperation } =

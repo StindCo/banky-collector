@@ -42,22 +42,6 @@ function CollectForm({ typeOperation }) {
 
   const [disableSubmit, setDisableSubmit] = useState(false);
 
-  const getAccounts = async (holderId) => {
-    setIsAccountLoading(true);
-
-    const { data } = await apiGetAccountsOfUser(holderId);
-
-    if (holderId == null) {
-      setFilteredAccountTo(data);
-    } else {
-      setAccounts(data);
-    }
-  };
-
-  React.useEffect(() => {
-    getAccounts(user.customer.id);
-  }, [user]);
-
   const makeATransfert = (values) => {
     navigation.navigate("Review", {
       ...values,

@@ -57,7 +57,7 @@ function ReportScreen() {
 
   const [selectedQuerytag, setSelectedQueryTag] = useState("today");
   const [collects, setCollects] = useState([]);
-  const [isCollectLoading, setIsCollectLoading] = useState(false);
+  const [isCollectLoading, setIsCollectLoading] = useState(true);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [isToDatePickerVisible, setToDatePickerVisibility] = useState(false);
 

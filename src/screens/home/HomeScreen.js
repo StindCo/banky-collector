@@ -51,9 +51,6 @@ function HomeScreen() {
     setIsModalShow(true);
   };
 
-  React.useEffect(() => {
-    getAccounts(user.customer?.id);
-  });
 
   return (
     <>
