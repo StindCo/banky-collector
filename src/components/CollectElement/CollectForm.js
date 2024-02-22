@@ -21,7 +21,7 @@ const validationSchema = Yup.object().shape({
   currency: Yup.string().required("Veuillez renseigner la devise"),
   amount: Yup.string().required("Veuillez renseigner le montant"),
   recipient: Yup.string().required("Veuillez renseigner le compte concerné"),
-  description: Yup.string().required("Veuillez renseigner la description"),
+  description: Yup.string().max(365, "Veuillez renseigner la description"),
 });
 
 function CollectForm({ typeOperation }) {

@@ -65,7 +65,11 @@ function ValidationScreen({ route, navigation }) {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => navigation.navigate("Home")}
+            onPress={() =>
+              navigation.navigate("Home", {
+                refreshTimeStamp: new Date().toISOString(),
+              })
+            }
             className=" mx-auto mt-2  text-center rounded-lg p-2 px-12 bg-orange-600"
           >
             <Text className="text-center font-[Poppins] text-white">

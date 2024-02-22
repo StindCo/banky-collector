@@ -9,9 +9,7 @@ export const createCollect = async (data) => {
 
   await AsyncStorage.setItem("collects", JSON.stringify(newCollections));
 
-  let newCollectionss = await AsyncStorage.getItem("collects");
-
-  console.log(newCollectionss);
+  // let newCollectionss = await AsyncStorage.getItem("collects");
 };
 
 export const getAllCollects = async () => {
@@ -26,11 +24,24 @@ export const getAllCollects = async () => {
 export const getAllCollectByType = async (type) => {
   try {
     const collectsStrings = await AsyncStorage.getItem("collects");
-    let collectsInJSON = collectsStrings != null ? JSON.parse(collectsStrings) : [];
-
-    console.log(collectsStrings);
+    let collectsInJSON =
+      collectsStrings != null ? JSON.parse(collectsStrings) : [];
 
     return collectsInJSON.filter((value) => value.typeOperation == type);
+  } catch (e) {
+    // error reading value
+  }
+};
+
+export const getAllCollectByTypeAndCurrency = async (type, currency) => {
+  try {
+    const collectsStrings = await AsyncStorage.getItem("collects");
+    let collectsInJSON =
+      collectsStrings != null ? JSON.parse(collectsStrings) : [];
+
+    return collectsInJSON.filter(
+      (value) => value.typeOperation == type && value.currency == currency
+    );
   } catch (e) {
     // error reading value
   }

@@ -7,6 +7,7 @@ import {
   Image,
   ScrollView,
   TextInput,
+  ViewBase,
 } from "react-native";
 import { BottomSheet, Icon } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/core";
@@ -19,6 +20,9 @@ import { apiGetAccountsOfUser } from "../../services/AccountServices";
 import CardList from "../../components/Card/CardList";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import CollectForm from "../../components/CollectElement/CollectForm";
+import { Button, ButtonGroup } from "@rneui/base";
+import { Pressable } from "react-native";
+import { RefreshControl } from "react-native";
 
 export const getSelectedOperationTextByTag = (tag) => {
   if (tag == "saving") return "Epargne";
@@ -26,31 +30,25 @@ export const getSelectedOperationTextByTag = (tag) => {
   else if (tag == "loan") return "Crédit";
 };
 
-function HomeScreen() {
+function HomeScreen({ route }) {
   const os = Platform.OS;
   const navigation = useNavigation();
 
   const [isModalShow, setIsModalShow] = React.useState(false);
   const user = useSelector((state) => state.auth.user);
-  const [accounts, setAccounts] = React.useState([]);
-  const [isAccountLoading, setIsAccountLoading] = React.useState(false);
 
   const [selectedOperation, setSelectedOperation] = React.useState("");
 
-  const getAccounts = async (holderId) => {
-    setIsAccountLoading(false);
+  const [renderRef, setRenderRef] = React.useState(false);
 
-    const { data } = await apiGetAccountsOfUser(holderId);
-
-    setAccounts(data);
-    setIsAccountLoading(true);
-  };
+  React.useEffect(() => {
+    setRenderRef(!renderRef);
+  }, [route.params]);
 
   const launchNewOperation = (operationTag) => {
     setSelectedOperation(operationTag);
     setIsModalShow(true);
   };
-
 
   return (
     <>
@@ -90,6 +88,7 @@ function HomeScreen() {
             </Text>
           </View>
         </View>
+
         <ScrollView className="bg-white rounded-t-[20px]">
           <View className="mt-8 px-6 space-y-8 mb-8">
             <Text className=" font-[Poppins]">Que voulez-vous collecter ?</Text>
@@ -121,8 +120,8 @@ function HomeScreen() {
           </View>
           <View className="mt-12 gap-2 px-6">
             <TouchableOpacity
-              onPress={() => launchNewOperation("saving_card")}
               className="h-28 w-40 border-2 border-gray-200 justify-center space-y-2 items-center rounded-lg  shadow-lg bg-slate-50"
+              onPress={() => launchNewOperation("saving_card")}
             >
               <MaterialCommunityIcons
                 name={"piggy-bank-outline"}

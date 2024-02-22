@@ -16,7 +16,11 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import RNPickerSelect from "react-native-picker-select";
 import { TYPE_OF_COLLECT } from "../../constants/app.constant";
 import CollectList from "../../components/CollectElement/CollectList";
-import { getAllCollectByType } from "../../services/CollectorService";
+import {
+  getAllCollectByType,
+  getAllCollectByTypeAndCurrency,
+} from "../../services/CollectorService";
+import { getAllByFilter } from "../../utils/CollectsUtils";
 
 const moment = require("moment");
 
@@ -56,7 +60,10 @@ function ReportScreen() {
   const navigation = useNavigation();
 
   const [selectedQuerytag, setSelectedQueryTag] = useState("today");
+
   const [collects, setCollects] = useState([]);
+  const [collectsFiltered, setCollectsFiltered] = useState([]);
+
   const [isCollectLoading, setIsCollectLoading] = useState(true);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [isToDatePickerVisible, setToDatePickerVisibility] = useState(false);
@@ -100,22 +107,29 @@ function ReportScreen() {
     hideToDatePicker();
   };
 
-  const getCollectsByType = async (type) => {
-    let collects = await getAllCollectByType(type);
+  const getCollectsByType = async (type, currency) => {
+    let collects = await getAllCollectByTypeAndCurrency(type, currency);
     setCollects(collects);
     setIsCollectLoading(false);
   };
 
   React.useEffect(() => {
+    getAllByFilter(collects, { toDate, fromDate, selectedQuerytag });
+    setCollectsFiltered(collects);
     setCumul(
-      collects.reduce((acc, collect) => acc + parseFloat(collect.amount), 0)
+      collects.reduce((acc, collect) => {
+        if (collect.currency == selectedCurrency) {
+          return acc + parseFloat(collect.amount);
+        }
+        return acc + 0;
+      }, 0)
     );
-  }, [collects]);
+  }, [collects, toDate, fromDate, selectedQuerytag]);
 
   React.useEffect(() => {
     setIsCollectLoading(true);
-    getCollectsByType(typeOfCollectSelected);
-  }, [typeOfCollectSelected]);
+    getCollectsByType(typeOfCollectSelected, selectedCurrency);
+  }, [typeOfCollectSelected, selectedCurrency]);
 
   return (
     <View className={`flex w-full h-full ${os ? "mt-12" : ""}`}>
@@ -330,7 +344,7 @@ function ReportScreen() {
               <CollectList
                 isTransactionLoading={true}
                 bgStyle="bg-zinc-50"
-                collects={collects}
+                collects={collectsFiltered}
               />
               <View className="py-14"></View>
             </View>
