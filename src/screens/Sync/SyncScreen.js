@@ -1,34 +1,44 @@
 import * as React from "react";
-import {
-  View,
-  TextInput,
-  Text,
-  Platform,
-  TouchableOpacity,
-  Image,
-  ScrollView,
-} from "react-native";
-import {
-  ArrowsRightLeftIcon,
-  MagnifyingGlassCircleIcon,
-  NewspaperIcon,
-} from "react-native-heroicons/outline";
+import { View, Text, Platform, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/core";
-import { useEffect, useState } from "react";
+
+import { useState } from "react";
 import Loader from "../../components/loading/Loader";
-import CardList from "../../components/Card/CardList";
 import { useSelector } from "react-redux";
-import { apiGetAccountsOfUser } from "../../services/AccountServices";
+import { Camera, CameraType } from "expo-camera";
 
 function SyncScreen() {
   const os = Platform.OS;
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
-  const [showSearchBar, setShowSearchBar] = useState(false);
-  const [filterText, setFilterText] = useState(null);
-  const [isAccountLoading, setIsAccountLoading] = useState(false);
 
   const user = useSelector((state) => state.auth.user);
+
+  // const [type, setType] = useState(CameraType.back);
+  const [permission, requestPermission] = Camera.useCameraPermissions();
+
+  function toggleCameraType() {
+    setType((current) =>
+      current === CameraType.back ? CameraType.front : CameraType.back
+    );
+  }
+
+  const [hasCameraPermission, setHasCameraPermission] = useState(null);
+  const [camera, setCamera] = useState(null);
+  const [image, setImage] = useState(null);
+  const [type, setType] = useState(Camera.Constants.Type.back);
+  React.useEffect(() => {
+    (async () => {})();
+  }, []);
+  const takePicture = async () => {
+    if (camera) {
+      const data = await camera.takePictureAsync(null);
+      setImage(data.uri);
+    }
+  };
+  if (hasCameraPermission === false) {
+    return <Text>No access to camera</Text>;
+  }
 
   return (
     <>
@@ -45,6 +55,23 @@ function SyncScreen() {
               </Text>
             </View>
             <View className="w-1/4 "></View>
+          </View>
+          <View>
+            <View className="mt-8 h-full">
+              <Camera className="mt-8 mx-5 h-80 rounded-lg" type={type}>
+                <View>
+                  <TouchableOpacity>
+                    <Text>Flip Camera</Text>
+                  </TouchableOpacity>
+                </View>
+              </Camera>
+
+              <TouchableOpacity className="mx-5 p-4 rounded-lg bg-indigo-950 mt-8">
+                <Text className="text-center text-white">
+                  Synchroniser les données
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       ) : (

@@ -25,7 +25,7 @@ export default function Collect({ collect, bgStyle }) {
             {collect.recipient}
           </Text>
           <Text className="text-xs font-[Poppins] text-gray-600">
-            {collect.created_at}
+            {moment(collect.created_at).format("DD-MM-YYYY HH:mm")}
           </Text>
         </View>
       </View>

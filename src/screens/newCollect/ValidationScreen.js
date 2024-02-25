@@ -6,31 +6,35 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
 } from "react-native";
+import * as Print from "expo-print";
+import { shareAsync } from "expo-sharing";
 import { CheckCircleIcon, XCircleIcon } from "react-native-heroicons/outline";
+import generateTemplate from "../../utils/ExportTicketDePerception";
+import { useSelector } from "react-redux";
 
 function ValidationScreen({ route, navigation }) {
   const os = Platform.OS;
   const [isPrinting, setIsPrinting] = React.useState(false);
 
+  const user = useSelector((state) => state.auth.user);
+
   const params = route.params;
 
-  const printToFile = () => {
+  const printToFile = async () => {
     // On iOS/android prints the given html. On web prints the HTML from the current page.
-    // setIsPrinting(true);
-    // const html = await generateTemplate(
-    //   params.accountFromObject,
-    //   params.accountToObject,
-    //   params.accountToObject.accountNumber,
-    //   params.data
-    // );
-    // const { uri } = await Print.printToFileAsync({
-    //   html,
-    //   base64: true,
-    //   width: 612,
-    // });
-    // console.log("File has been saved to:", uri);
-    // await shareAsync(uri, { UTI: ".pdf", mimeType: "application/pdf" });
-    // setIsPrinting(false);
+    setIsPrinting(true);
+    try {
+      const html = await generateTemplate(params.data, user);
+      const { uri } = await Print.printAsync({
+        html,
+        base64: true,
+        width: 612,
+      });
+      await shareAsync(uri, { UTI: ".pdf", mimeType: "application/pdf" });
+      setIsPrinting(false);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   React.useEffect(() => {}, []);
@@ -66,7 +70,7 @@ function ValidationScreen({ route, navigation }) {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() =>
-              navigation.navigate("Home", {
+              navigation.navigate("Application", {
                 refreshTimeStamp: new Date().toISOString(),
               })
             }

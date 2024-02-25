@@ -89,7 +89,7 @@ function ReportScreen() {
   };
 
   const handleConfirm = (date) => {
-    setFromDate(moment(date).format("DD-MM-YYYY"));
+    setFromDate(date.toISOString());
 
     hideDatePicker();
   };
@@ -103,7 +103,7 @@ function ReportScreen() {
   };
 
   const handleToConfirm = (date) => {
-    setToDate(moment(date).format("DD-MM-YYYY"));
+    setToDate(date.toISOString());
     hideToDatePicker();
   };
 
@@ -114,10 +114,14 @@ function ReportScreen() {
   };
 
   React.useEffect(() => {
-    getAllByFilter(collects, { toDate, fromDate, selectedQuerytag });
-    setCollectsFiltered(collects);
+    let newCollectedFilter = getAllByFilter(collects, {
+      toDate,
+      fromDate,
+      selectedQuerytag,
+    });
+    setCollectsFiltered(newCollectedFilter);
     setCumul(
-      collects.reduce((acc, collect) => {
+      newCollectedFilter.reduce((acc, collect) => {
         if (collect.currency == selectedCurrency) {
           return acc + parseFloat(collect.amount);
         }
@@ -208,18 +212,18 @@ function ReportScreen() {
               <Card
                 className="shadow-lg"
                 amount={cumul}
-                nbrCollect={collects.length}
+                nbrCollect={collectsFiltered.length}
                 typeOperation={typeOfCollectSelected}
                 currency={selectedCurrency}
               />
             </View>
           </View>
 
-          <View className="px-5 mt-5">
+          <View className="px-5 mt-5 mb-1">
             <ScrollView
               horizontal={true}
               showsHorizontalScrollIndicator={false}
-              className="pr-10"
+              className="pr-2"
             >
               <RNPickerSelect
                 onValueChange={(value) => setSelectedCurrency(value)}
@@ -288,7 +292,9 @@ function ReportScreen() {
                       >
                         <Text className="font-[Poppins]">Du : </Text>
                         <Text className="font-[PoppinsBold]">
-                          {fromDate ?? "                    "}
+                          {fromDate
+                            ? moment(fromDate).format("DD-MM-YYYY")
+                            : "                    "}
                         </Text>
                       </Text>
                     </TouchableOpacity>
@@ -306,7 +312,9 @@ function ReportScreen() {
                       >
                         <Text className="font-[Poppins]">Au : </Text>
                         <Text className="font-[PoppinsBold]">
-                          {toDate ?? "                    "}
+                          {toDate
+                            ? moment(toDate).format("DD-MM-YYYY")
+                            : "                    "}
                         </Text>
                       </Text>
                     </TouchableOpacity>

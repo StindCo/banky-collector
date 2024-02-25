@@ -19,7 +19,7 @@ import * as Crypto from "expo-crypto";
 function ReviewScreen({ route, navigation }) {
   const os = Platform.OS;
 
-  const { currency, amount, typeOperation, recipient, description } =
+  const { currency, toDate, amount, typeOperation, recipient, description } =
     route.params;
 
   const [finalSolde, setFinalSolde] = useState(0);
@@ -29,23 +29,24 @@ function ReviewScreen({ route, navigation }) {
 
   const makeACollect = async () => {
     if (!isSubmitting) {
-      let dataToSend = {
-        currency,
-        amount,
-        id_operation: Crypto.randomUUID(),
-        typeOperation,
-        recipient,
-        description,
-        id_agent: user.id,
-        is_synchronized: 1,
-        created_at: moment(new Date()).format("DD-MM-YYYY HH:mm:ss"),
-      };
-
       try {
+        let dataToSend = {
+          currency,
+          amount,
+          id_operation: Crypto.randomUUID(),
+          typeOperation,
+          recipient,
+          description: description ?? "",
+          id_agent: user.id,
+          is_synchronized: 1,
+          created_at: toDate ?? new Date().toISOString(),
+        };
+
         createCollect(dataToSend)
           .then(() => {
             navigation.navigate("Validation", {
               type: "ok",
+              data: dataToSend,
             });
           })
           .catch((err) => console.log(err));

@@ -42,8 +42,10 @@ function HomeScreen({ route }) {
   const [renderRef, setRenderRef] = React.useState(false);
 
   React.useEffect(() => {
-    setRenderRef(!renderRef);
-  }, [route.params]);
+    navigation.addListener("focus", () => {
+      setRenderRef(!renderRef);
+    });
+  }, [navigation]);
 
   const launchNewOperation = (operationTag) => {
     setSelectedOperation(operationTag);
@@ -96,7 +98,10 @@ function HomeScreen({ route }) {
 
           <View className=" flex-row justify-between space-x-2 px-6 mb-8">
             <TouchableOpacity
-              onPress={() => launchNewOperation("saving")}
+              // onPress={() => launchNewOperation("saving")}
+              onPress={() =>
+                navigation.navigate("CollectForm", { typeOperation: "saving" })
+              }
               className="h-28 w-40 border-2  border-gray-200 justify-center space-y-2 items-center rounded-lg shadow-lg bg-slate-50"
             >
               <MaterialCommunityIcons
@@ -109,7 +114,9 @@ function HomeScreen({ route }) {
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => launchNewOperation("loan")}
+              onPress={() =>
+                navigation.navigate("CollectForm", { typeOperation: "loan" })
+              }
               className="h-28 w-40 justify-center border-2 border-gray-200 space-y-2 items-center rounded-lg shadow-lg bg-slate-50"
             >
               <CreditCardIcon color="#16a34a" size={40} />
@@ -121,7 +128,9 @@ function HomeScreen({ route }) {
           <View className="mt-12 gap-2 px-6">
             <TouchableOpacity
               className="h-28 w-40 border-2 border-gray-200 justify-center space-y-2 items-center rounded-lg  shadow-lg bg-slate-50"
-              onPress={() => launchNewOperation("saving_card")}
+              onPress={() =>
+                navigation.navigate("CollectForm", { typeOperation: "saving_card" })
+              }
             >
               <MaterialCommunityIcons
                 name={"piggy-bank-outline"}

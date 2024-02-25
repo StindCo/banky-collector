@@ -21,6 +21,7 @@ import ReportScreen from "../screens/report/ReportScreen";
 import SyncScreen from "../screens/Sync/SyncScreen";
 import ReviewScreen from "../screens/newCollect/ReviewScreen";
 import ValidationScreen from "../screens/newCollect/ValidationScreen";
+import CollectForm from "../components/CollectElement/CollectForm";
 
 const Stack = createNativeStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -90,6 +91,13 @@ function Screens() {
         <>
           <Stack.Screen name="Review" component={ReviewScreen} />
           <Stack.Screen name="Validation" component={ValidationScreen} />
+          <Stack.Screen
+            name="CollectForm"
+            component={CollectForm}
+            options={{
+              headerShown: false,
+            }}
+          />
           <Stack.Screen
             name="ChangePassword"
             component={ChangePasswordScreen}
