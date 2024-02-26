@@ -58,7 +58,7 @@ function SyncScreen() {
           </View>
           <View>
             <View className="mt-8 h-full">
-              <Camera className="mt-8 mx-auto w-64 h-64 rounded-lg" type={type}>
+              <Camera className="mt-8 mx-5 h-80 rounded-lg" type={type}>
                 <View>
                   <TouchableOpacity>
                     <Text>Flip Camera</Text>
@@ -66,10 +66,8 @@ function SyncScreen() {
                 </View>
               </Camera>
 
-              <TouchableOpacity className="mx-5 p-4 rounded-lg bg-indigo-950   mt-8">
-                <Text className="text-center font-[Poppins] text-white">
-                  Synchroniser les données
-                </Text>
+              <TouchableOpacity className="mx-5 p-4 rounded-lg bg-primary mt-8">
+                <Text className="text-center text-white">Synchroniser les données</Text>
               </TouchableOpacity>
             </View>
           </View>
