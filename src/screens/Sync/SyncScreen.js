@@ -5,7 +5,7 @@ import { useNavigation } from "@react-navigation/core";
 import { useState } from "react";
 import Loader from "../../components/loading/Loader";
 import { useSelector } from "react-redux";
-import { Camera, CameraType } from "expo-camera";
+// import { Camera, CameraType } from "expo-camera";
 
 function SyncScreen() {
   const os = Platform.OS;
@@ -15,30 +15,30 @@ function SyncScreen() {
   const user = useSelector((state) => state.auth.user);
 
   // const [type, setType] = useState(CameraType.back);
-  const [permission, requestPermission] = Camera.useCameraPermissions();
+  // const [permission, requestPermission] = Camera.useCameraPermissions();
 
-  function toggleCameraType() {
-    setType((current) =>
-      current === CameraType.back ? CameraType.front : CameraType.back
-    );
-  }
+  // function toggleCameraType() {
+  //   setType((current) =>
+  //     current === CameraType.back ? CameraType.front : CameraType.back
+  //   );
+  // }
 
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [camera, setCamera] = useState(null);
   const [image, setImage] = useState(null);
-  const [type, setType] = useState(Camera.Constants.Type.back);
+  // const [type, setType] = useState(Camera.Constants.Type.back);
   React.useEffect(() => {
     (async () => {})();
   }, []);
-  const takePicture = async () => {
-    if (camera) {
-      const data = await camera.takePictureAsync(null);
-      setImage(data.uri);
-    }
-  };
-  if (hasCameraPermission === false) {
-    return <Text>No access to camera</Text>;
-  }
+  // const takePicture = async () => {
+  //   if (camera) {
+  //     const data = await camera.takePictureAsync(null);
+  //     setImage(data.uri);
+  //   }
+  // };
+  // if (hasCameraPermission === false) {
+  //   return <Text>No access to camera</Text>;
+  // }
 
   return (
     <>
@@ -58,16 +58,18 @@ function SyncScreen() {
           </View>
           <View>
             <View className="mt-8 h-full">
-              <Camera className="mt-8 mx-5 h-80 rounded-lg" type={type}>
+              {/* <Camera className="mt-8 mx-5 h-80 rounded-lg" type={type}>
                 <View>
                   <TouchableOpacity>
                     <Text>Flip Camera</Text>
                   </TouchableOpacity>
                 </View>
-              </Camera>
+              </Camera> */}
 
               <TouchableOpacity className="mx-5 p-4 rounded-lg bg-primary mt-8">
-                <Text className="text-center text-white">Synchroniser les données</Text>
+                <Text className="text-center text-white">
+                  Synchroniser les données
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
