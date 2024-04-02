@@ -26,8 +26,9 @@ import { RefreshControl } from "react-native";
 
 export const getSelectedOperationTextByTag = (tag) => {
   if (tag == "saving") return "Epargne";
-  else if (tag == "saving_card") return "Buakisa carte";
-  else if (tag == "loan") return "Crédit";
+  else if (tag == "S") return "Bwakisa carte";
+  else if (tag == "L") return "Crédit";
+  else if (tag == "D") return "Dépôt";
 };
 
 function HomeScreen({ route }) {
@@ -58,7 +59,10 @@ function HomeScreen({ route }) {
         className={`flex w-full bg-indigo-950   h-full ${os ? "pt-14" : ""}`}
       >
         <View className="flex-row justify-between items-center pb-3 px-5">
-          <View
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("Setting");
+            }}
             className={`rounded-full ${
               os !== "ios" && "border border-primary"
             } `}
@@ -69,7 +73,7 @@ function HomeScreen({ route }) {
                 os === "ios" && "border border-primary"
               }`}
             />
-          </View>
+          </TouchableOpacity>
           <View>
             {/* <Text className="text-base font-[Poppins] text-white">Accueil</Text> */}
           </View>
@@ -98,24 +102,25 @@ function HomeScreen({ route }) {
 
           <View className=" flex-row justify-between space-x-2 px-6 mb-8">
             <TouchableOpacity
-              // onPress={() => launchNewOperation("saving")}
+              className="h-28 w-40 border-2 border-gray-200 justify-center space-y-2 items-center rounded-lg  shadow-lg bg-slate-50"
               onPress={() =>
-                navigation.navigate("CollectForm", { typeOperation: "saving" })
+                navigation.navigate("CollectForm", {
+                  typeOperation: "D",
+                })
               }
-              className="h-28 w-40 border-2  border-gray-200 justify-center space-y-2 items-center rounded-lg shadow-lg bg-slate-50"
             >
               <MaterialCommunityIcons
-                name={"wallet-outline"}
+                name={"cash-plus"}
                 size={40}
-                color="#2563eb"
+                color="#7c3aed"
               />
-              <Text className="text-blue-600 font-[Poppins] text-center font-medium">
-                Epargne
+              <Text className="text-violet-600 font-[Poppins] text-center font-medium">
+                Dépot Cash
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() =>
-                navigation.navigate("CollectForm", { typeOperation: "loan" })
+                navigation.navigate("CollectForm", { typeOperation: "L" })
               }
               className="h-28 w-40 justify-center border-2 border-gray-200 space-y-2 items-center rounded-lg shadow-lg bg-slate-50"
             >
@@ -125,11 +130,13 @@ function HomeScreen({ route }) {
               </Text>
             </TouchableOpacity>
           </View>
-          <View className="mt-12 gap-2 px-6">
+          <View className="flex-row justify-between space-x-2 px-6">
             <TouchableOpacity
               className="h-28 w-40 border-2 border-gray-200 justify-center space-y-2 items-center rounded-lg  shadow-lg bg-slate-50"
               onPress={() =>
-                navigation.navigate("CollectForm", { typeOperation: "saving_card" })
+                navigation.navigate("CollectForm", {
+                  typeOperation: "S",
+                })
               }
             >
               <MaterialCommunityIcons
@@ -138,7 +145,7 @@ function HomeScreen({ route }) {
                 color="#ea580c"
               />
               <Text className="text-orange-600 font-[Poppins] text-center font-medium">
-                Buakisa carte
+                Bwakisa carte
               </Text>
             </TouchableOpacity>
           </View>

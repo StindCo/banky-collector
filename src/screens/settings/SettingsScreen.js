@@ -37,7 +37,7 @@ function SettingsScreen() {
       <View className="flex-row justify-between items-center pb-3 px-5">
         <View className={`w-1/3  `}></View>
         <View className="w-1/3">
-          <Text className="text-base font-[Poppins] text-center text-black">
+          <Text className="text-sm font-[Poppins] text-center text-black">
             Paramètres
           </Text>
         </View>
@@ -54,16 +54,16 @@ function SettingsScreen() {
               >
                 <Image
                   source={require("../../../assets/favicon.png")}
-                  className={`w-16 h-16 rounded-full ${
+                  className={`w-14 h-14 rounded-full ${
                     os === "ios" && "border border-primary"
                   }`}
                 />
               </View>
               <View className="justify-around">
-                <Text className="text-lg font-[PoppinsBold] font-semibold">
+                <Text className="text-sm font-[PoppinsBold] font-semibold">
                   {user.displayName}
                 </Text>
-                <Text className="text-sm font-[Poppins] text-gray-600">
+                <Text className="text-xs font-[Poppins] text-gray-600">
                   {user?.phoneNumber ?? user.email}
                 </Text>
               </View>
@@ -89,7 +89,7 @@ function SettingsScreen() {
                     </View>*/}
           <View className="w-full space-y-1">
             <View>
-              <Text className="text-lg text-gray-800 font-medium font-[Poppins]">
+              <Text className="text-sm text-gray-800 font-medium font-[Poppins]">
                 Sécurité
               </Text>
             </View>
@@ -107,7 +107,7 @@ function SettingsScreen() {
                   <Text className="text-sm font-semibold font-[Poppins]">
                     Sécurité
                   </Text>
-                  <Text className="text-sm font-[Poppins] text-gray-600 w-[200px]">
+                  <Text className="text-xs font-[Poppins] text-gray-600 w-[200px]">
                     Changer de mot de passe
                   </Text>
                 </View>
@@ -119,7 +119,7 @@ function SettingsScreen() {
           </View>
           <View className="w-full space-y-1">
             <View>
-              <Text className="text-lg text-gray-800 font-medium font-[Poppins]">
+              <Text className="text-sm text-gray-800 font-medium font-[Poppins]">
                 Support
               </Text>
             </View>
@@ -132,7 +132,7 @@ function SettingsScreen() {
                 </View>
                 <View className="justify-between space-y-1">
                   <Text className="text-sm font-semibold">Contactez-nous</Text>
-                  <Text className="text-sm font-[Poppins] text-gray-600 w-[200px]">
+                  <Text className="text-xs font-[Poppins] text-gray-600 w-[200px]">
                     Envoyez un courriel, appelez-nous ou retrouvez-nous sur les
                     médias sociaux
                   </Text>

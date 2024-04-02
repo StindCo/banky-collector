@@ -19,6 +19,7 @@ import CollectList from "../../components/CollectElement/CollectList";
 import {
   getAllCollectByType,
   getAllCollectByTypeAndCurrency,
+  getAllCollects,
 } from "../../services/CollectorService";
 import { getAllByFilter } from "../../utils/CollectsUtils";
 
@@ -65,50 +66,19 @@ function ReportScreen() {
   const [collectsFiltered, setCollectsFiltered] = useState([]);
 
   const [isCollectLoading, setIsCollectLoading] = useState(true);
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-  const [isToDatePickerVisible, setToDatePickerVisibility] = useState(false);
 
-  const [cumul, setCumul] = useState(0);
-
-  const [beforeDate, setBeforeDate] = useState(null);
-  const [afterDate, setAfterDate] = useState(null);
+  const [cumulCDF, setCumulCDF] = useState(0);
+  const [cumulUSD, setCumulUSD] = useState(0);
 
   const [toDate, setToDate] = useState(null);
   const [fromDate, setFromDate] = useState(null);
 
   const [selectedCurrency, setSelectedCurrency] = useState("USD");
 
-  const [typeOfCollectSelected, setTypeOfCollectSelected] = useState("saving");
-
-  const showDatePicker = () => {
-    setDatePickerVisibility(true);
-  };
-
-  const hideDatePicker = () => {
-    setDatePickerVisibility(false);
-  };
-
-  const handleConfirm = (date) => {
-    setFromDate(date.toISOString());
-
-    hideDatePicker();
-  };
-
-  const showToDatePicker = () => {
-    setToDatePickerVisibility(true);
-  };
-
-  const hideToDatePicker = () => {
-    setToDatePickerVisibility(false);
-  };
-
-  const handleToConfirm = (date) => {
-    setToDate(date.toISOString());
-    hideToDatePicker();
-  };
+  const [typeOfCollectSelected, setTypeOfCollectSelected] = useState("D");
 
   const getCollectsByType = async (type, currency) => {
-    let collects = await getAllCollectByTypeAndCurrency(type, currency);
+    let collects = await getAllCollectByType(type);
     setCollects(collects);
     setIsCollectLoading(false);
   };
@@ -120,9 +90,18 @@ function ReportScreen() {
       selectedQuerytag,
     });
     setCollectsFiltered(newCollectedFilter);
-    setCumul(
+    setCumulUSD(
       newCollectedFilter.reduce((acc, collect) => {
-        if (collect.currency == selectedCurrency) {
+        if (collect.currency == "USD") {
+          return acc + parseFloat(collect.amount);
+        }
+        return acc + 0;
+      }, 0)
+    );
+
+    setCumulCDF(
+      newCollectedFilter.reduce((acc, collect) => {
+        if (collect.currency == "CDF") {
           return acc + parseFloat(collect.amount);
         }
         return acc + 0;
@@ -132,8 +111,13 @@ function ReportScreen() {
 
   React.useEffect(() => {
     setIsCollectLoading(true);
-    getCollectsByType(typeOfCollectSelected, selectedCurrency);
-  }, [typeOfCollectSelected, selectedCurrency]);
+    getCollectsByType(typeOfCollectSelected);
+  }, [typeOfCollectSelected]);
+
+  React.useEffect(() => {
+    setIsCollectLoading(true);
+    getCollectsByType(typeOfCollectSelected);
+  }, [navigation]);
 
   return (
     <View className={`flex w-full h-full ${os ? "mt-12" : ""}`}>
@@ -145,20 +129,22 @@ function ReportScreen() {
           <ChevronLeftIcon color="black" />
         </TouchableOpacity>
         <View className="w-1/3">
-          <Text className="text-base text-center text-black">Rapports</Text>
+          <Text className="text-base text-center text-black">
+            Mes collectes
+          </Text>
         </View>
         <View className="w-1/3"></View>
       </View>
 
       <View className="mt-3 mx-5 flex-row items-center justify-center">
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={() => setTypeOfCollectSelected("saving")}
           className={`p-2 ${
             typeOfCollectSelected == "saving" ? "bg-primary" : "bg-slate-200"
           }  px-3 rounded-l-lg`}
         >
           <Text
-            className={`text-white ${
+            className={`text-white text-xs ${
               typeOfCollectSelected == "saving"
                 ? "text-white"
                 : "text-indigo-950"
@@ -166,17 +152,32 @@ function ReportScreen() {
           >
             Epargne
           </Text>
+        </TouchableOpacity> */}
+
+        <TouchableOpacity
+          onPress={() => setTypeOfCollectSelected("D")}
+          className={`p-2 rounded-l-lg ${
+            typeOfCollectSelected == "D" ? "bg-primary" : "bg-slate-200"
+          }  px-5 `}
+        >
+          <Text
+            className={`text-white px-2  text-xs ${
+              typeOfCollectSelected == "D" ? "text-white" : "text-indigo-950"
+            }`}
+          >
+            Dépot
+          </Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => setTypeOfCollectSelected("loan")}
+          onPress={() => setTypeOfCollectSelected("L")}
           className={`p-2 ${
-            typeOfCollectSelected == "loan" ? "bg-primary" : "bg-slate-200"
+            typeOfCollectSelected == "L" ? "bg-primary" : "bg-slate-200"
           }  px-5`}
         >
           <Text
-            className={`text-white ${
-              typeOfCollectSelected == "loan" ? "text-white" : "text-indigo-950"
+            className={`text-white px-2  text-xs ${
+              typeOfCollectSelected == "L" ? "text-white" : "text-indigo-950"
             }`}
           >
             Crédit
@@ -184,21 +185,17 @@ function ReportScreen() {
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => setTypeOfCollectSelected("saving_card")}
+          onPress={() => setTypeOfCollectSelected("S")}
           className={`p-2 ${
-            typeOfCollectSelected == "saving_card"
-              ? "bg-primary"
-              : "bg-slate-200"
+            typeOfCollectSelected == "S" ? "bg-primary" : "bg-slate-200"
           }  px-5 rounded-r-lg `}
         >
           <Text
-            className={`text-white ${
-              typeOfCollectSelected == "saving_card"
-                ? "text-white"
-                : "text-indigo-950"
+            className={`text-white text-xs ${
+              typeOfCollectSelected == "S" ? "text-white" : "text-indigo-950"
             }`}
           >
-            Buakisa carte
+            Bwakisa carte
           </Text>
         </TouchableOpacity>
       </View>
@@ -211,7 +208,8 @@ function ReportScreen() {
             <View>
               <Card
                 className="shadow-lg"
-                amount={cumul}
+                amountCDF={cumulCDF}
+                amountUSD={cumulUSD}
                 nbrCollect={collectsFiltered.length}
                 typeOperation={typeOfCollectSelected}
                 currency={selectedCurrency}
@@ -219,7 +217,7 @@ function ReportScreen() {
             </View>
           </View>
 
-          <View className="px-5 mt-5 mb-1">
+          {/* <View className="px-5 mt-5 mb-1">
             <ScrollView
               horizontal={true}
               showsHorizontalScrollIndicator={false}
@@ -340,7 +338,7 @@ function ReportScreen() {
                 />
               </View>
             </ScrollView>
-          </View>
+          </View> */}
 
           <ScrollView>
             <View className="space-y-4 px-7 mt-6">

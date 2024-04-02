@@ -12,7 +12,7 @@ import { CheckCircleIcon, XCircleIcon } from "react-native-heroicons/outline";
 import generateTemplate from "../../utils/ExportTicketDePerception";
 import { useSelector } from "react-redux";
 
-function ValidationScreen({ route, navigation }) {
+function ValidationCommitScreen({ route, navigation }) {
   const os = Platform.OS;
   const [isPrinting, setIsPrinting] = React.useState(false);
 
@@ -48,7 +48,6 @@ function ValidationScreen({ route, navigation }) {
         <View className="flex  mt-8">
           <View className="mx-5 space-y-5  py-5 px-5  my-2">
             {/* <CurrencyDollarIcon color={"#eee"} size={100} /> */}
-
             <View className="mx-auto mt-5">
               <CheckCircleIcon size={130} color={"green"} />
             </View>
@@ -61,14 +60,6 @@ function ValidationScreen({ route, navigation }) {
           </View>
 
           <TouchableOpacity
-            onPress={() => printToFile()}
-            className="my-8 mb-5 mx-auto  text-center rounded-lg p-3 px-5 bg-blue-600"
-          >
-            <Text className="text-center  font-[Poppins] text-white">
-              {isPrinting ? "Impression en cours ..." : "Imprimer le ticket"}
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
             onPress={() =>
               navigation.navigate("Home", {
                 refreshTimeStamp: new Date().toISOString(),
@@ -76,7 +67,7 @@ function ValidationScreen({ route, navigation }) {
             }
             className=" mx-auto mt-2  text-center rounded-lg p-2 px-12 bg-orange-600"
           >
-            <Text className="text-center font-[Poppins] text-white">
+            <Text className="text-center text-sm font-[Poppins] text-white">
               Quitter
             </Text>
           </TouchableOpacity>
@@ -97,21 +88,19 @@ function ValidationScreen({ route, navigation }) {
                 Une erreur est survenue
               </Text>
             </View>
+
+            <View>
+              <Text className="text-xs text-center font-[Poppins]">
+                {params?.message}
+              </Text>
+            </View>
           </View>
 
-          <TouchableOpacity
-            onPress={() => navigation.goBack()}
-            className="my-8 mb-5 mx-5 text-center rounded-lg p-4 bg-blue-600"
-          >
-            <Text className="text-center text-lg font-[Poppins] text-white">
-              Réessayer le transfert
-            </Text>
-          </TouchableOpacity>
           <TouchableOpacity
             onPress={() => navigation.navigate("Home")}
             className=" mx-auto mt-2  text-center rounded-lg p-3 px-12 bg-orange-600"
           >
-            <Text className="text-center text-lg font-[Poppins] text-white">
+            <Text className="text-center text-sm font-[Poppins] text-white">
               Quitter
             </Text>
           </TouchableOpacity>
@@ -121,4 +110,4 @@ function ValidationScreen({ route, navigation }) {
   );
 }
 
-export default ValidationScreen;
+export default ValidationCommitScreen;

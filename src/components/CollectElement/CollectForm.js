@@ -23,14 +23,15 @@ import { ChevronDownIcon } from "react-native-heroicons/outline";
 const validationSchema = Yup.object().shape({
   currency: Yup.string().required("Veuillez renseigner la devise"),
   amount: Yup.string().required("Veuillez renseigner le montant"),
-  recipient: Yup.string().required("Veuillez renseigner le compte concerné"),
+  asset: Yup.string().required("Veuillez renseigner le compte concerné"),
   description: Yup.string().max(365, "Veuillez renseigner la description"),
 });
 
 export const getSelectedOperationTextByTag = (tag) => {
   if (tag == "saving") return "Epargne";
-  else if (tag == "saving_card") return "Buakisa carte";
-  else if (tag == "loan") return "Crédit";
+  else if (tag == "S") return "Bwakisa carte";
+  else if (tag == "L") return "Crédit";
+  else if (tag == "D") return "Dépot";
 };
 
 function CollectForm({ route }) {
@@ -39,14 +40,13 @@ function CollectForm({ route }) {
   const navigation = useNavigation();
   const [isToDatePickerVisible, setToDatePickerVisibility] = useState(false);
   const [toDate, setToDate] = useState(null);
-
   const [disableSubmit, setDisableSubmit] = useState(false);
 
   const makeATransfert = (values) => {
     navigation.navigate("Review", {
       ...values,
-      typeOperation,
-      toDate,
+      goal: typeOperation,
+      date: toDate,
     });
   };
 
@@ -68,9 +68,10 @@ function CollectForm({ route }) {
       // Remove this initial value
       initialValues={{
         currency: "USD",
-        recipient: "",
+        asset: "",
         amount: "",
         description: "",
+        userInfo: "",
       }}
       validationSchema={validationSchema}
       onSubmit={(values, { setSubmitting }) => {
@@ -148,25 +149,45 @@ function CollectForm({ route }) {
                     <View className="w-full  space-y-1">
                       <Text className="text-gray-600 text-xs font-[Poppins]">
                         {typeOperation == "saving_card"
-                          ? "Numéro carte Buakisa carte"
+                          ? "Numéro carte Bwakisa carte"
                           : "Numéro de compte"}
                       </Text>
                       <TextInput
-                        onChangeText={handleChange("recipient")}
-                        defaultValue={values.recipient}
-                        keyboardType="number-pad"
+                        onChangeText={handleChange("asset")}
+                        defaultValue={values.asset}
+                        keyboardType={
+                          typeOperation != "S" ? "number-pad" : "ascii-capable"
+                        }
                         placeholder={
-                          typeOperation == "saving_card"
-                            ? "Inserer numéro carte Buakisa carte"
+                          typeOperation == "S"
+                            ? "Inserer numéro carte Bwakisa carte"
                             : "Inserer numéro de compte"
                         }
                         className="text-sm border-b  border-gray-400 pb-2"
                       />
                       <Text className="text-red-700">
-                        {touched.recipient && errors.recipient}
+                        {touched.asset && errors.asset}
                       </Text>
                     </View>
                   </View>
+
+                  <View className="w-full">
+                    <View className="w-full space-y-1">
+                      <Text className="text-gray-600 text-xs font-[Poppins]">
+                        Numéro de téléphone / Adresse email
+                      </Text>
+                      <TextInput
+                        onChangeText={handleChange("userInfo")}
+                        defaultValue={values.userInfo}
+                        placeholder="Inserer la description ..."
+                        className="text-sm border-b border-gray-400 pb-2"
+                      />
+                      <Text className="text-red-700">
+                        {touched.userInfo && errors.userInfo}
+                      </Text>
+                    </View>
+                  </View>
+
                   <View className="w-full">
                     <View className="w-full space-y-1">
                       <Text className="text-gray-600 text-xs font-[Poppins]">
@@ -184,7 +205,7 @@ function CollectForm({ route }) {
                     </View>
                   </View>
 
-                  {typeOperation == "saving_card" && (
+                  {typeOperation == "S" && (
                     <View className="w-full">
                       <View className="w-full  space-y-1">
                         <Text className="text-gray-600 text-xs font-[Poppins]">

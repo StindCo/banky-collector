@@ -19,7 +19,7 @@ import * as Crypto from "expo-crypto";
 function ReviewScreen({ route, navigation }) {
   const os = Platform.OS;
 
-  const { currency, toDate, amount, typeOperation, recipient, description } =
+  const { currency, date, userInfo, amount, goal, asset, description } =
     route.params;
 
   const [finalSolde, setFinalSolde] = useState(0);
@@ -34,12 +34,13 @@ function ReviewScreen({ route, navigation }) {
           currency,
           amount,
           id_operation: Crypto.randomUUID(),
-          typeOperation,
-          recipient,
-          description: description ?? "",
+          goal,
+          asset,
+          data3: description ?? "",
+          data2: userInfo ?? "",
           id_agent: user.id,
           is_synchronized: 1,
-          created_at: toDate ?? new Date().toISOString(),
+          data1: date ?? new Date().toISOString(),
         };
 
         createCollect(dataToSend)
@@ -101,21 +102,21 @@ function ReviewScreen({ route, navigation }) {
                 </View>
                 <View>
                   <Text className="font-[PoppinsBold] text-sm text-gray-300">
-                    {getSelectedOperationTextByTag(typeOperation)}
+                    {getSelectedOperationTextByTag(goal)}
                   </Text>
                 </View>
               </View>
               <View className="grid grid-flow-row grid-cols-2">
                 <View>
                   <Text className="font-[Poppins] text-xs mt-2 text-white">
-                    {typeOperation == "saving_card"
-                      ? "Numéro carte Buakisa carte"
+                    {goal == "saving_card"
+                      ? "Numéro carte Bwakisa carte"
                       : "Numéro de compte"}
                   </Text>
                 </View>
                 <View>
                   <Text className="font-[PoppinsBold] text-sm text-gray-300">
-                    {recipient}
+                    {asset}
                   </Text>
                 </View>
               </View>
@@ -127,6 +128,18 @@ function ReviewScreen({ route, navigation }) {
               {/* <CurrencyDollarIcon color={"#eee"} size={100} /> */}
 
               <View className="">
+                <View className="flex flex-row mb-3 items-center justify-between">
+                  <View className="">
+                    <Text className="font-[Poppins] text-xs text-left ">
+                      Informations sur le client
+                    </Text>
+                  </View>
+                  <View>
+                    <Text className="font-[Poppins] w-32 text-right text-xs">
+                      {userInfo}
+                    </Text>
+                  </View>
+                </View>
                 <View className="flex flex-row mb-3 items-center justify-between">
                   <View className="">
                     <Text className="font-[Poppins] text-left ">Motif</Text>

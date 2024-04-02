@@ -32,12 +32,13 @@
       }
     },
     "plugins": [
-      // [
-      //   "expo-camera",
-      //   {
-      //     "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera."
-      //   }
-      // ]
+      "expo-build-properties",
+      [
+        "expo-barcode-scanner",
+        {
+          "cameraPermission": "Allow banky collector to access camera."
+        }
+      ]
     ]
   }
 }

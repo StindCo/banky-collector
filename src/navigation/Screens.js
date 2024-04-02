@@ -1,5 +1,10 @@
 import * as React from "react";
-import { HomeScreen, LoginScreen, NotificationScreen } from "../index";
+import {
+  HomeScreen,
+  LoginScreen,
+  NotificationScreen,
+  SettingsScreen,
+} from "../index";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
@@ -22,6 +27,8 @@ import SyncScreen from "../screens/Sync/SyncScreen";
 import ReviewScreen from "../screens/newCollect/ReviewScreen";
 import ValidationScreen from "../screens/newCollect/ValidationScreen";
 import CollectForm from "../components/CollectElement/CollectForm";
+import ReviewCommitScreen from "../screens/Sync/ReviewCommitScreen";
+import ValidationCommitScreen from "../screens/Sync/ValidationCommitScreen";
 
 const Stack = createNativeStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -90,7 +97,13 @@ function Screens() {
       {session.signedIn ? (
         <>
           <Stack.Screen name="Review" component={ReviewScreen} />
+          <Stack.Screen name="ReviewCommit" component={ReviewCommitScreen} />
+          <Stack.Screen
+            name="ValidationCommit"
+            component={ValidationCommitScreen}
+          />
           <Stack.Screen name="Validation" component={ValidationScreen} />
+          <Stack.Screen name="Setting" component={SettingsScreen} />
           <Stack.Screen
             name="CollectForm"
             component={CollectForm}

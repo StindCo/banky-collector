@@ -20,8 +20,8 @@ import useTimeOutMessage from "../../utils/hooks/useTimeOutMessage";
 import { useToast } from "react-native-toast-notifications";
 
 const validationSchema = Yup.object().shape({
-  userName: Yup.string().required("Veillez renseignez l'identifiant"),
-  password: Yup.string().required("Veillez renseignez le mot de passe"),
+  userName: Yup.string().required("Veuillez renseigner l'identifiant"),
+  password: Yup.string().required("Veuillez renseigner le mot de passe"),
 });
 
 function LoginScreen() {
@@ -65,15 +65,15 @@ function LoginScreen() {
       className={`flex-1`}
     >
       <View className="w-full bg-indigo-950  h-full">
-        <View className="flex h-[35%] bg-indigo-950 justify-center items-center">
+        <View className="flex h-[25%] bg-indigo-950 justify-center items-center">
           <Image
             source={require("../../../assets/img/logo/logo-dark-full.png")}
-            className="w-[175px] h-[175px]"
+            className="w-[150px] h-[150px]"
           />
         </View>
         <View className="flex items-center bg-white w-full h-full rounded-t-3xl border-t-2">
           <View>
-            <Text className="text-xl font-semibold mt-10 font-[Poppins]">
+            <Text className="text-lg font-semibold mt-10 font-[Poppins]">
               Bienvenue à nouveau !
             </Text>
           </View>
@@ -81,8 +81,8 @@ function LoginScreen() {
             <Formik
               // Remove this initial value
               initialValues={{
-                userName: "SC23090721500018",
-                password: "kavira@muffa.cd",
+                userName: "SC23090718410013",
+                password: "87654321",
               }}
               validationSchema={validationSchema}
               onSubmit={(values, { setSubmitting }) => {
@@ -153,7 +153,7 @@ function LoginScreen() {
                       className="w-full p-3 bg-indigo-950 font-[PoppinsBold] rounded-lg mb-3"
                       onPress={handleSubmit}
                     >
-                      <Text className="text-lg text-slate-50 text-center font-[Poppins]">
+                      <Text className="text-sm text-slate-50 text-center font-[Poppins]">
                         {!isSubmitting
                           ? "Se connecter"
                           : "Connexion en cours ..."}

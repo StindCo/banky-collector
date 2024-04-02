@@ -1,7 +1,11 @@
 import { useSelector, useDispatch } from "react-redux";
-import { setUser, initialState} from "../../store/auth/userSlice";
-import jwt from 'jwt-decode'
-import { apiSignIn, apiSignOut, apiUserAbout  } from "../../services/AuthService";
+import { setUser, initialState } from "../../store/auth/userSlice";
+import jwt from "jwt-decode";
+import {
+  apiSignIn,
+  apiSignOut,
+  apiUserAbout,
+} from "../../services/AuthService";
 import {
   onSignInSuccess,
   onSignOutSuccess,
@@ -13,7 +17,7 @@ import { useNavigation } from "@react-navigation/core";
 function useAuth() {
   const dispatch = useDispatch();
 
-  const navigation = useNavigation()
+  const navigation = useNavigation();
 
   const { token, signedIn } = useSelector((state) => state.auth.session);
 
@@ -21,9 +25,9 @@ function useAuth() {
     try {
       const resp = await apiSignIn(values);
       if (resp.data) {
+        console.log(data);
         const { token } = resp.data;
         dispatch(onSignInSuccess(token));
-
 
         const { data } = await apiUserAbout(token);
 
@@ -78,7 +82,7 @@ function useAuth() {
     // navigation.navigate(appConfig.unAuthenticatedEntryPath);
   };
 
-  const signOut =  () => {
+  const signOut = () => {
     // await apiSignOut();
     handleSignOut();
   };

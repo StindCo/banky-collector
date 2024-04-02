@@ -5,8 +5,9 @@ const moment = require("moment");
 
 export const getSelectedOperationTextByTag = (tag) => {
   if (tag == "saving") return "Epargne";
-  else if (tag == "saving_card") return "Buakisa carte";
-  else if (tag == "loan") return "Crédit";
+  else if (tag == "S") return "Bwakisa carte";
+  else if (tag == "L") return "Crédit";
+  else if (tag == "D") return "Dépot";
 };
 
 async function generateHearder(data, user) {
@@ -28,20 +29,20 @@ async function generateHearder(data, user) {
 <br />
 
 <h1 style="text-align:center; padding-bottom:0px; font-size:28px;">${
-    user.platform.name
+    user.platform?.name
   }</h1>
 <h1 style="text-align:center; margin:0; padding-bottom:10px; font-size:20px;">${
-    user.partition.name
+    user.partition?.name
   }</h1>
 <div style="text-align:center; margin:0; padding-bottom:20px; font-size:15px;  border-bottom: 1px solid #aaa">${
-    user.partition.address
+    user.partition?.address
   }</div>
 <h1 style="text-align:center; padding-bottom:5px; font-size:12px;">${
-    user.business_role.label
+    user.business_role?.label
   }</h1>
 
 <h1 style="text-align:center; padding-bottom:20px; font-size:18px; border-bottom: 2px solid #aaa">${
-    user.displayName
+    user?.displayName
   }</h1>
 
 
@@ -49,7 +50,7 @@ async function generateHearder(data, user) {
      "DD/MM/YY HH:mm"
    )}</h2>
   <div style="text-align:center; padding-bottom:20px; font-size:28px;"> ${getSelectedOperationTextByTag(
-    data.typeOperation
+    data.goal
   )}</div>
 
 <div
@@ -66,7 +67,7 @@ style="
         <div style="display: flex; justify-content: space-between; align-items:center;margin-bottom: 10px">
             <div>Numéro de compte :</div>
             <div style="font-weight: bold; text-align: right">${
-              data.recipient
+              data.asset
             }</div>
           </div>
 
@@ -87,10 +88,16 @@ style="
               data?.description == "" ? "-" : data.description
             }</div>
           </div>
+          <div style="display: flex; justify-content: space-between;  align-items:center; margin-bottom: 10px">
+          <div  >Informations sur le client :</div>
+          <div style="font-weight: bold; text-align: right">${
+            data?.data2 == "" ? "-" : data?.data2
+          }</div>
+        </div>
           <div style="display: flex; justify-content: space-between; align-items:center; margin-bottom: 10px">
           <div>Date :</div>
           <div style="font-weight: bold; text-align: right">${moment(
-            data?.created_at
+            data?.data?.data1
           ).format("DD-MM-YYYY")}</div>
         </div>
       </div>
