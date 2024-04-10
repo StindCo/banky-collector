@@ -74,7 +74,7 @@ function LoginScreen() {
         <View className="flex items-center bg-white w-full h-full rounded-t-3xl border-t-2">
           <View>
             <Text className="text-lg font-semibold mt-10 font-[Poppins]">
-              Bienvenue à nouveau !
+              Bienvenue !
             </Text>
           </View>
           <View className="w-full">

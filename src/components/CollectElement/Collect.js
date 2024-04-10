@@ -12,19 +12,19 @@ const moment = require("moment");
 export default function Collect({ collect, bgStyle }) {
   return (
     <View
-      className={`flex-row mt-3 justify-between shadow-lg items-start p-2 py-5 rounded-lg  ${bgStyle}`}
+      className={`flex-row mt-3 justify-between items-start p-2 py-3 rounded-lg  ${bgStyle}`}
     >
-      <View className="w-3/5 flex-row space-x-4 items-start">
+      <View className="w-3/5 flex-row space-x-4 items-center">
         <View className="flex w-18 pl-2 items-center justify-center">
           <View>
             <BanknotesIcon size={25} color={"#166534"} />
           </View>
         </View>
         <View className="space-y-1 text-left w-4/5">
-          <Text className="font-[PoppinsBold] text-sm text-gray-700 text-left">
+          <Text className="font-[PoppinsBold] text-xs text-gray-700 text-left">
             {collect.asset}
           </Text>
-          <Text className="text-xs font-[Poppins] text-gray-600">
+          <Text className="text-[9px] font-[Poppins] text-gray-600">
             {moment(collect.data1).format("DD-MM-YYYY HH:mm")}
           </Text>
         </View>

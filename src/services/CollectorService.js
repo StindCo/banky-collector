@@ -33,6 +33,24 @@ export const getAllCollectByType = async (type) => {
   }
 };
 
+export const getAllCollectByTypeAndQuery = async (type, query) => {
+  try {
+    let queryText = query.toLowerCase();
+    const collectsStrings = await AsyncStorage.getItem("collects");
+    let collectsInJSON =
+      collectsStrings != null ? JSON.parse(collectsStrings) : [];
+
+    return collectsInJSON.filter(
+      (value) =>
+        value.goal == type &&
+        (value.asset.toLowerCase().includes(queryText) ||
+          value.data3.toLowerCase().includes(queryText))
+    );
+  } catch (e) {
+    // error reading value
+  }
+};
+
 export const getAllCollects = async (type) => {
   try {
     const collectsStrings = await AsyncStorage.getItem("collects");

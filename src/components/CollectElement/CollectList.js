@@ -5,6 +5,7 @@ import Collect from "./Collect";
 
 export default function CollectList({
   collects = [],
+
   isTransactionLoading = false,
   bgStyle = null,
 }) {

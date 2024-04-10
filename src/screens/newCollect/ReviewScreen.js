@@ -36,12 +36,14 @@ function ReviewScreen({ route, navigation }) {
           id_operation: Crypto.randomUUID(),
           goal,
           asset,
-          data3: description ?? "",
-          data2: userInfo ?? "",
-          id_agent: user.id,
-          is_synchronized: 1,
+          data4: description ?? "",
+          data3: userInfo ?? "",
+          data2: user.id,
           data1: date ?? new Date().toISOString(),
+          is_synchronized: 1,
         };
+
+        console.log(dataToSend);
 
         createCollect(dataToSend)
           .then(() => {

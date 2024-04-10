@@ -88,12 +88,13 @@ function HomeScreen({ route }) {
         </View>
         <View className=" px-5 py-5 mb-6 space-y-1 ">
           <View className="flex space-y-2">
-            <Text className="text-sm text-white font-[Poppins]">Bonjour, </Text>
-            <Text className="text-lg text-white truncate font-[PoppinsBold] text-wrap font-medium">
+            <Text className="text-xs text-white font-[Poppins]">Bonjour, </Text>
+            <Text className="text-sm text-white truncate font-[PoppinsBold] text-wrap font-medium">
               {user.displayName}
             </Text>
           </View>
         </View>
+
 
         <ScrollView className="bg-white rounded-t-[20px]">
           <View className="mt-8 px-6 space-y-8 mb-8">

@@ -7,8 +7,15 @@ import {
   TouchableOpacity,
   Image,
   ActivityIndicator,
+  TextInput,
+  KeyboardAvoidingView,
 } from "react-native";
-import { ChevronLeftIcon } from "react-native-heroicons/outline";
+import {
+  ChevronLeftIcon,
+  MagnifyingGlassCircleIcon,
+  MagnifyingGlassIcon,
+  XMarkIcon,
+} from "react-native-heroicons/outline";
 import { useNavigation } from "@react-navigation/core";
 import Card from "../../components/Card/Card";
 import { useState } from "react";
@@ -19,6 +26,7 @@ import CollectList from "../../components/CollectElement/CollectList";
 import {
   getAllCollectByType,
   getAllCollectByTypeAndCurrency,
+  getAllCollectByTypeAndQuery,
   getAllCollects,
 } from "../../services/CollectorService";
 import { getAllByFilter } from "../../utils/CollectsUtils";
@@ -69,6 +77,9 @@ function ReportScreen() {
 
   const [cumulCDF, setCumulCDF] = useState(0);
   const [cumulUSD, setCumulUSD] = useState(0);
+  const [querySearch, setQuerySearch] = useState("");
+
+  const [onSearch, setOnSearch] = useState(true);
 
   const [toDate, setToDate] = useState(null);
   const [fromDate, setFromDate] = useState(null);
@@ -109,6 +120,12 @@ function ReportScreen() {
     );
   }, [collects, toDate, fromDate, selectedQuerytag]);
 
+  const onClose = () => {
+    setQuerySearch("");
+    setOnSearch(false);
+    getCollectsByType(typeOfCollectSelected);
+  };
+
   React.useEffect(() => {
     setIsCollectLoading(true);
     getCollectsByType(typeOfCollectSelected);
@@ -119,25 +136,43 @@ function ReportScreen() {
     getCollectsByType(typeOfCollectSelected);
   }, [navigation]);
 
-  return (
-    <View className={`flex w-full h-full ${os ? "mt-12" : ""}`}>
-      <View className="flex-row justify-between items-center pb-3 px-5">
-        <TouchableOpacity
-          className={`w-1/3 rounded-full`}
-          onPress={() => navigation.navigate("Home")}
-        >
-          <ChevronLeftIcon color="black" />
-        </TouchableOpacity>
-        <View className="w-1/3">
-          <Text className="text-base text-center text-black">
-            Mes collectes
-          </Text>
-        </View>
-        <View className="w-1/3"></View>
-      </View>
+  const filterCollect = React.useCallback(
+    async (text) => {
+      if (text == "") getCollectsByType(typeOfCollectSelected);
+      setQuerySearch(text);
+      let collects = await getAllCollectByTypeAndQuery(
+        typeOfCollectSelected,
+        text
+      );
 
-      <View className="mt-3 mx-5 flex-row items-center justify-center">
-        {/* <TouchableOpacity
+      setCollectsFiltered(collects);
+    },
+    [typeOfCollectSelected]
+  );
+
+  return (
+    <KeyboardAvoidingView
+      behavior={os === "ios" ? "padding" : "height-100"}
+      className={`flex-1`}
+    >
+      <ScrollView className={`flex w-full h-full ${os ? "mt-12" : ""}`}>
+        <View className="flex-row justify-between items-center pb-3 px-5">
+          <TouchableOpacity
+            className={`w-1/3 rounded-full`}
+            onPress={() => navigation.navigate("Home")}
+          >
+            <ChevronLeftIcon color="black" />
+          </TouchableOpacity>
+          <View className="w-1/3">
+            <Text className="text-base text-center text-black">
+              Mes collectes
+            </Text>
+          </View>
+          <View className="w-1/3"></View>
+        </View>
+
+        <View className="mt-3 mx-5 flex-row items-center justify-center">
+          {/* <TouchableOpacity
           onPress={() => setTypeOfCollectSelected("saving")}
           className={`p-2 ${
             typeOfCollectSelected == "saving" ? "bg-primary" : "bg-slate-200"
@@ -154,210 +189,109 @@ function ReportScreen() {
           </Text>
         </TouchableOpacity> */}
 
-        <TouchableOpacity
-          onPress={() => setTypeOfCollectSelected("D")}
-          className={`p-2 rounded-l-lg ${
-            typeOfCollectSelected == "D" ? "bg-primary" : "bg-slate-200"
-          }  px-5 `}
-        >
-          <Text
-            className={`text-white px-2  text-xs ${
-              typeOfCollectSelected == "D" ? "text-white" : "text-indigo-950"
-            }`}
+          <TouchableOpacity
+            onPress={() => setTypeOfCollectSelected("D")}
+            className={`p-2 rounded-l-lg ${
+              typeOfCollectSelected == "D" ? "bg-primary" : "bg-slate-200"
+            }  px-5 `}
           >
-            Dépot
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={() => setTypeOfCollectSelected("L")}
-          className={`p-2 ${
-            typeOfCollectSelected == "L" ? "bg-primary" : "bg-slate-200"
-          }  px-5`}
-        >
-          <Text
-            className={`text-white px-2  text-xs ${
-              typeOfCollectSelected == "L" ? "text-white" : "text-indigo-950"
-            }`}
-          >
-            Crédit
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={() => setTypeOfCollectSelected("S")}
-          className={`p-2 ${
-            typeOfCollectSelected == "S" ? "bg-primary" : "bg-slate-200"
-          }  px-5 rounded-r-lg `}
-        >
-          <Text
-            className={`text-white text-xs ${
-              typeOfCollectSelected == "S" ? "text-white" : "text-indigo-950"
-            }`}
-          >
-            Bwakisa carte
-          </Text>
-        </TouchableOpacity>
-      </View>
-
-      {isCollectLoading ? (
-        <ActivityIndicator color={"#1e1b4b"} className="mt-5" />
-      ) : (
-        <>
-          <View className="px-5 mt-5">
-            <View>
-              <Card
-                className="shadow-lg"
-                amountCDF={cumulCDF}
-                amountUSD={cumulUSD}
-                nbrCollect={collectsFiltered.length}
-                typeOperation={typeOfCollectSelected}
-                currency={selectedCurrency}
-              />
-            </View>
-          </View>
-
-          {/* <View className="px-5 mt-5 mb-1">
-            <ScrollView
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-              className="pr-2"
+            <Text
+              className={`text-white px-2  text-xs ${
+                typeOfCollectSelected == "D" ? "text-white" : "text-indigo-950"
+              }`}
             >
-              <RNPickerSelect
-                onValueChange={(value) => setSelectedCurrency(value)}
-                items={[
-                  { label: "Dollars américain", value: "USD" },
-                  { label: "Francs congolais", value: "CDF" },
-                ]}
-              >
-                <View className="mx-2">
-                  <TouchableOpacity
-                    onPress={() => {}}
-                    className={`p-2 px-4 bg-slate-200  rounded-lg`}
-                  >
-                    <Text className={`font-[Poppins] text-slate-800 text-sm `}>
-                      Dévise:{"  "}
-                      <Text className="font-[PoppinsBold]">
-                        {selectedCurrency}
-                      </Text>
-                    </Text>
-                  </TouchableOpacity>
+              Dépot
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => setTypeOfCollectSelected("L")}
+            className={`p-2 ${
+              typeOfCollectSelected == "L" ? "bg-primary" : "bg-slate-200"
+            }  px-5`}
+          >
+            <Text
+              className={`text-white px-2  text-xs ${
+                typeOfCollectSelected == "L" ? "text-white" : "text-indigo-950"
+              }`}
+            >
+              Crédit
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => setTypeOfCollectSelected("S")}
+            className={`p-2 ${
+              typeOfCollectSelected == "S" ? "bg-primary" : "bg-slate-200"
+            }  px-5 rounded-r-lg `}
+          >
+            <Text
+              className={`text-white text-xs ${
+                typeOfCollectSelected == "S" ? "text-white" : "text-indigo-950"
+              }`}
+            >
+              Bwakisa carte
+            </Text>
+          </TouchableOpacity>
+        </View>
+
+        {isCollectLoading ? (
+          <ActivityIndicator color={"#1e1b4b"} className="mt-5" />
+        ) : (
+          <>
+            {!onSearch && (
+              <View className="px-5 mt-5">
+                <View>
+                  <Card
+                    className="shadow-lg"
+                    amountCDF={cumulCDF}
+                    amountUSD={cumulUSD}
+                    nbrCollect={collectsFiltered.length}
+                    typeOperation={typeOfCollectSelected}
+                    currency={selectedCurrency}
+                  />
                 </View>
-              </RNPickerSelect>
-              <Text className="mt-4 ml-8 text-xs font-[Poppins]">
-                Temporalité:{" "}
-              </Text>
-              {LIST_OF_SEARCH_QUERY_TAG.map((value, index) => (
-                <View key={index} className="mx-2">
-                  {value.tag != "custom" &&
-                  value.tag != "from" &&
-                  value.tag != "to" ? (
-                    <TouchableOpacity
-                      onPress={() => {
-                        setToDate(null);
-                        setFromDate(null);
-                        setSelectedQueryTag(value.tag);
-                      }}
-                      className={`p-2 px-4 bg-slate-200  rounded-lg ${
-                        value.tag == selectedQuerytag &&
-                        toDate == null &&
-                        fromDate == null &&
-                        "bg-primary"
-                      }`}
-                    >
-                      <Text
-                        className={`font-[Poppins] text-slate-800 text-sm ${
-                          value.tag == selectedQuerytag &&
-                          toDate == null &&
-                          fromDate == null &&
-                          "text-slate-100"
-                        }`}
-                      >
-                        {value.displayName}
-                      </Text>
-                    </TouchableOpacity>
-                  ) : null}
+              </View>
+            )}
 
-                  {value.tag == "from" ? (
-                    <TouchableOpacity
-                      onPress={showDatePicker}
-                      className={`p-1.5 px-4 bg-slate-200  rounded-lg ${
-                        fromDate && "bg-primary"
-                      }`}
-                    >
-                      <Text
-                        className={`font-[Poppins] ${fromDate && "text-white"}`}
-                      >
-                        <Text className="font-[Poppins]">Du : </Text>
-                        <Text className="font-[PoppinsBold]">
-                          {fromDate
-                            ? moment(fromDate).format("DD-MM-YYYY")
-                            : "                    "}
-                        </Text>
-                      </Text>
-                    </TouchableOpacity>
-                  ) : null}
-
-                  {value.tag == "to" ? (
-                    <TouchableOpacity
-                      onPress={showToDatePicker}
-                      className={`p-1.5 px-4 bg-slate-200  rounded-lg ${
-                        toDate && "bg-primary"
-                      }`}
-                    >
-                      <Text
-                        className={`font-[Poppins] ${toDate && "text-white"}`}
-                      >
-                        <Text className="font-[Poppins]">Au : </Text>
-                        <Text className="font-[PoppinsBold]">
-                          {toDate
-                            ? moment(toDate).format("DD-MM-YYYY")
-                            : "                    "}
-                        </Text>
-                      </Text>
-                    </TouchableOpacity>
-                  ) : null}
-                </View>
-              ))}
-
-              <View>
-                <DateTimePickerModal
-                  isVisible={isDatePickerVisible}
-                  mode="date"
-                  onConfirm={handleConfirm}
-                  onCancel={hideDatePicker}
+            <View className="flex p-3 py-1 my-5 rounded-lg justify-between border-gray-400 mx-5 border items-center flex-row space-x-2">
+              <View className="w-2/3 flex-row space-x-3 items-center">
+                <MagnifyingGlassIcon size={15} color={"#000"} />
+                <TextInput
+                  onChangeText={(text) => filterCollect(text)}
+                  onFocus={() => setOnSearch(true)}
+                  value={querySearch}
+                  placeholder="Rechercher une collecte"
+                  className="text-[11px] w-full  text-black  border-gray-400  font-[Poppins]"
+                  keyboardType="default"
                 />
               </View>
+              {onSearch && (
+                <TouchableOpacity className="px-3" onPress={() => onClose()}>
+                  <XMarkIcon size={15} color={"#ff0000"} />
+                </TouchableOpacity>
+              )}
+            </View>
 
-              <View>
-                <DateTimePickerModal
-                  isVisible={isToDatePickerVisible}
-                  mode="date"
-                  onConfirm={handleToConfirm}
-                  onCancel={hideToDatePicker}
+            <ScrollView>
+              <View className="space-y-4 px-7">
+                <View className="flex flex-row justify-between items-center">
+                  <Text className="text-md font-[Poppins] font-semibold">
+                    Liste de collectes
+                  </Text>
+                </View>
+                <CollectList
+                  isTransactionLoading={true}
+                  bgStyle="bg-zinc-50"
+                  collects={collectsFiltered}
                 />
+                <View className="py-14"></View>
               </View>
             </ScrollView>
-          </View> */}
-
-          <ScrollView>
-            <View className="space-y-4 px-7 mt-6">
-              <View className="flex flex-row justify-between items-center">
-                <Text className="text-md font-[Poppins] font-semibold">
-                  Liste de collectes
-                </Text>
-              </View>
-              <CollectList
-                isTransactionLoading={true}
-                bgStyle="bg-zinc-50"
-                collects={collectsFiltered}
-              />
-              <View className="py-14"></View>
-            </View>
-          </ScrollView>
-        </>
-      )}
-    </View>
+          </>
+        )}
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 

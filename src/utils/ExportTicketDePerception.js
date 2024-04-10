@@ -85,20 +85,20 @@ style="
           <div style="display: flex; justify-content: space-between;  align-items:center; margin-bottom: 10px">
             <div  >Description :</div>
             <div style="font-weight: bold; text-align: right">${
-              data?.description == "" ? "-" : data.description
+              data?.data4 == "" ? "-" : data?.data4
             }</div>
           </div>
           <div style="display: flex; justify-content: space-between;  align-items:center; margin-bottom: 10px">
           <div  >Informations sur le client :</div>
           <div style="font-weight: bold; text-align: right">${
-            data?.data2 == "" ? "-" : data?.data2
+            data?.data3 == "" ? "-" : data?.data3
           }</div>
         </div>
           <div style="display: flex; justify-content: space-between; align-items:center; margin-bottom: 10px">
           <div>Date :</div>
           <div style="font-weight: bold; text-align: right">${moment(
             data?.data?.data1
-          ).format("DD-MM-YYYY")}</div>
+          ).format("DD-MM-YYYY HH:mm")}</div>
         </div>
       </div>
   </div>
