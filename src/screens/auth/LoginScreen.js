@@ -8,6 +8,7 @@ import {
   TextInput,
   TouchableOpacity,
   SafeAreaView,
+  ScrollView,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useState } from "react";
@@ -71,102 +72,110 @@ function LoginScreen() {
             className="w-[150px] h-[150px]"
           />
         </View>
-        <View className="flex items-center bg-white w-full h-full rounded-t-3xl border-t-2">
-          <View>
-            <Text className="text-lg font-semibold mt-10 font-[Poppins]">
-              Bienvenue !
-            </Text>
+        <ScrollView>
+          <View className="flex items-center bg-white w-full h-full rounded-t-3xl border-t-2">
+            <View>
+              <Text className="text-lg font-semibold mt-10 font-[Poppins]">
+                Bienvenue !
+              </Text>
+            </View>
+            <View className="w-full">
+              <Formik
+                // Remove this initial value
+                initialValues={{
+                  userName: "SC23090718410013",
+                  password: "87654321",
+                }}
+                validationSchema={validationSchema}
+                onSubmit={(values, { setSubmitting }) => {
+                  if (!disableSubmit) {
+                    onSignIn(values);
+                  } else {
+                    setSubmitting(false);
+                  }
+                }}
+              >
+                {({
+                  errors,
+                  handleChange,
+                  handleBlur,
+                  handleSubmit,
+                  values,
+                }) => (
+                  <View className="px-7 mt-10">
+                    <View className="space-y-2 mt-2">
+                      <Text className="text-left font-[Poppins]">
+                        Email ou numéro de téléphone
+                      </Text>
+                      <View className="w-full justify-center">
+                        <TextInput
+                          onChangeText={handleChange("userName")}
+                          onBlur={handleBlur("userName")}
+                          value={values.userName}
+                          placeholder="Email ou tél"
+                          className="h-[45px] border-b rounded-lg px-3 border-gray-300 text-gray-800"
+                        />
+                        <Text className="text-left text-red-700 text-xs mt-1 font-[Poppins]">
+                          {errors.userName}
+                        </Text>
+                      </View>
+                    </View>
+
+                    <View className="space-y-2 mt-2">
+                      <Text className="text-left font-[Poppins]">
+                        Mot de passe
+                      </Text>
+                      <View className="w-full justify-center">
+                        <TextInput
+                          className="h-[45px] border-b rounded-lg px-3 border-gray-300 text-gray-800"
+                          secureTextEntry={!showPassword}
+                          onChangeText={handleChange("password")}
+                          onBlur={handleBlur("password")}
+                          value={values.password}
+                          placeholder="Mot de passe"
+                        />
+                        <Text className="text-left text-red-700 text-xs mt-1 font-[Poppins]">
+                          {errors.password}
+                        </Text>
+                      </View>
+                      <View className="absolute bottom-7 right-4">
+                        <MaterialCommunityIcons
+                          name={showPassword ? "eye-off" : "eye"}
+                          size={24}
+                          color="#aaa"
+                          onPress={toggleShowPassword}
+                        />
+                      </View>
+                    </View>
+
+                    <View>
+                      <TouchableOpacity>
+                        <Text className="text-right mt-2 font-[Poppins]">
+                          Mot de passe oublié ?
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+
+                    <View className="mt-5">
+                      <TouchableOpacity
+                        className="w-full p-3 bg-indigo-950 font-[PoppinsBold] rounded-lg mb-3"
+                        onPress={handleSubmit}
+                      >
+                        <Text className="text-sm text-slate-50 text-center font-[Poppins]">
+                          {!isSubmitting
+                            ? "Se connecter"
+                            : "Connexion en cours ..."}
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+
+                    {/* <Button onPress={handleSubmit} title="Submit" /> */}
+                  </View>
+                )}
+              </Formik>
+            </View>
           </View>
-          <View className="w-full">
-            <Formik
-              // Remove this initial value
-              initialValues={{
-                userName: "SC23090718410013",
-                password: "87654321",
-              }}
-              validationSchema={validationSchema}
-              onSubmit={(values, { setSubmitting }) => {
-                if (!disableSubmit) {
-                  onSignIn(values);
-                } else {
-                  setSubmitting(false);
-                }
-              }}
-            >
-              {({ errors, handleChange, handleBlur, handleSubmit, values }) => (
-                <View className="px-7 mt-10">
-                  <View className="space-y-2 mt-2">
-                    <Text className="text-left font-[Poppins]">
-                      Email ou numéro de téléphone
-                    </Text>
-                    <View className="w-full justify-center">
-                      <TextInput
-                        onChangeText={handleChange("userName")}
-                        onBlur={handleBlur("userName")}
-                        value={values.userName}
-                        placeholder="Email ou tél"
-                        className="h-[45px] border-b rounded-lg px-3 border-gray-300 text-gray-800"
-                      />
-                      <Text className="text-left text-red-700 text-xs mt-1 font-[Poppins]">
-                        {errors.userName}
-                      </Text>
-                    </View>
-                  </View>
-
-                  <View className="space-y-2 mt-2">
-                    <Text className="text-left font-[Poppins]">
-                      Mot de passe
-                    </Text>
-                    <View className="w-full justify-center">
-                      <TextInput
-                        className="h-[45px] border-b rounded-lg px-3 border-gray-300 text-gray-800"
-                        secureTextEntry={!showPassword}
-                        onChangeText={handleChange("password")}
-                        onBlur={handleBlur("password")}
-                        value={values.password}
-                        placeholder="Mot de passe"
-                      />
-                      <Text className="text-left text-red-700 text-xs mt-1 font-[Poppins]">
-                        {errors.password}
-                      </Text>
-                    </View>
-                    <View className="absolute bottom-7 right-4">
-                      <MaterialCommunityIcons
-                        name={showPassword ? "eye-off" : "eye"}
-                        size={24}
-                        color="#aaa"
-                        onPress={toggleShowPassword}
-                      />
-                    </View>
-                  </View>
-
-                  <View>
-                    <TouchableOpacity>
-                      <Text className="text-right mt-2 font-[Poppins]">
-                        Mot de passe oublié ?
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-
-                  <View className="mt-5">
-                    <TouchableOpacity
-                      className="w-full p-3 bg-indigo-950 font-[PoppinsBold] rounded-lg mb-3"
-                      onPress={handleSubmit}
-                    >
-                      <Text className="text-sm text-slate-50 text-center font-[Poppins]">
-                        {!isSubmitting
-                          ? "Se connecter"
-                          : "Connexion en cours ..."}
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-
-                  {/* <Button onPress={handleSubmit} title="Submit" /> */}
-                </View>
-              )}
-            </Formik>
-          </View>
-        </View>
+        </ScrollView>
       </View>
     </KeyboardAvoidingView>
   );
