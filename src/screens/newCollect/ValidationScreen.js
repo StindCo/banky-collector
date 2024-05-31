@@ -25,13 +25,14 @@ function ValidationScreen({ route, navigation }) {
     setIsPrinting(true);
     try {
       const html = await generateTemplate(params.data, user);
+      setIsPrinting(false);
       const { uri } = await Print.printAsync({
         html,
         base64: true,
         width: 612,
       });
+
       // await shareAsync(uri, { UTI: ".pdf", mimeType: "application/pdf" });
-      setIsPrinting(false);
     } catch (error) {
       console.log(error);
     }

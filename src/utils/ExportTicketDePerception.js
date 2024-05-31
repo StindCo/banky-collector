@@ -20,7 +20,7 @@ async function generateHearder(data, user) {
   // });
 
   return `
-  <div style="background: #fff;width: 100%; display: flex; justify-content: center; align-items: center;">
+  <div style="background: #fff;width: 100%; display: flex; font-size:25px; justify-content: center; align-items: center;">
   <div>
 
   </div>
@@ -37,7 +37,7 @@ async function generateHearder(data, user) {
 <div style="text-align:center; margin:0; padding-bottom:20px; font-size:15px;  border-bottom: 1px solid #aaa">${
     user.partition?.address
   }</div>
-<h1 style="text-align:center; padding-bottom:5px; font-size:12px;">${
+<h1 style="text-align:center; padding-bottom:5px; font-size:16px;">${
     user.business_role?.label
   }</h1>
 
@@ -46,7 +46,7 @@ async function generateHearder(data, user) {
   }</h1>
 
 
-   <h2 style="text-align:center; font-size:12px">${moment(new Date()).format(
+   <h2 style="text-align:center; font-size:16px">${moment(new Date()).format(
      "DD/MM/YY HH:mm"
    )}</h2>
   <div style="text-align:center; padding-bottom:20px; font-size:28px;"> ${getSelectedOperationTextByTag(
@@ -64,37 +64,37 @@ style="
 <div style="width: 100%">
   <div style="display:flex; font-size: 20px; align-items: center; justify-content: space-between; ">
       <div style="width:100%">
-        <div style="display: flex; justify-content: space-between; align-items:center;margin-bottom: 10px">
+        <div style="display: flex; font-size:25px; justify-content: space-between; align-items:center;margin-bottom: 10px">
             <div>Numéro de compte :</div>
             <div style="font-weight: bold; text-align: right">${
               data.asset
             }</div>
           </div>
 
-          <div style="display: flex; justify-content: space-between; align-items: center;margin-bottom: 10px">
+          <div style="display: flex; font-size:25px; justify-content: space-between; align-items: center;margin-bottom: 10px">
             <div>Montant :  </div>
             <div style="font-size:38px; font-weight: bold">${data.amount}</div>
           </div>
 
-          <div style="display: flex; justify-content: space-between; align-items:center; margin-bottom: 10px">
+          <div style="display: flex; font-size:25px; justify-content: space-between; align-items:center; margin-bottom: 10px">
             <div  >Devise :</div>
             <div style="font-weight: bold; text-align: right">${
               data?.currency
             }</div>
           </div>
-          <div style="display: flex; justify-content: space-between;  align-items:center; margin-bottom: 10px">
+          <div style="display: flex; font-size:25px; justify-content: space-between;  align-items:center; margin-bottom: 10px">
             <div  >Description :</div>
             <div style="font-weight: bold; text-align: right">${
               data?.data4 == "" ? "-" : data?.data4
             }</div>
           </div>
-          <div style="display: flex; justify-content: space-between;  align-items:center; margin-bottom: 10px">
+          <div style="display: flex; font-size:25px; justify-content: space-between;  align-items:center; margin-bottom: 10px">
           <div  >Informations sur le client :</div>
           <div style="font-weight: bold; text-align: right">${
             data?.data3 == "" ? "-" : data?.data3
           }</div>
         </div>
-          <div style="display: flex; justify-content: space-between; align-items:center; margin-bottom: 10px">
+          <div style="display: flex; font-size:25px; justify-content: space-between; align-items:center; margin-bottom: 10px">
           <div>Date :</div>
           <div style="font-weight: bold; text-align: right">${moment(
             data?.data?.data1
@@ -138,7 +138,7 @@ export default async function generateTemplate(data, user) {
       body {
         font-family: "Roboto";
         background-color: #fff;
-        font-size: 12px;
+        font-size: 15px;
         padding: 50px;
       }
       #customers {
@@ -153,7 +153,7 @@ export default async function generateTemplate(data, user) {
       #customers th {
         border: 1px solid #aaa;
         padding: 8px;
-        font-size: 12px;
+        font-size: 16px;
         text-align: left;
       }
 

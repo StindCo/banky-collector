@@ -17,6 +17,24 @@ export const createCollect = async (data) => {
   // let newCollectionss = await AsyncStorage.getItem("collects");
 };
 
+export const updateCollect = async (data) => {
+  const collectsStrings = await AsyncStorage.getItem("collects");
+  let collectsInJSON =
+    collectsStrings != null ? JSON.parse(collectsStrings) : [];
+
+  let newCollections = collectsInJSON.map((value) => {
+    if (data?.id_operation === value?.id_operation) {
+      return data;
+    }
+
+    return value;
+  });
+
+  await AsyncStorage.setItem("collects", JSON.stringify(newCollections));
+
+  // let newCollectionss = await AsyncStorage.getItem("collects");
+};
+
 export const clearCollect = async () => {
   await AsyncStorage.setItem("collects", JSON.stringify([]));
 };

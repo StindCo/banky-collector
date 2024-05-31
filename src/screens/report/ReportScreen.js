@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
   TextInput,
   KeyboardAvoidingView,
+  RefreshControl,
 } from "react-native";
 import {
   ChevronLeftIcon,
@@ -87,11 +88,13 @@ function ReportScreen() {
   const [selectedCurrency, setSelectedCurrency] = useState("USD");
 
   const [typeOfCollectSelected, setTypeOfCollectSelected] = useState("D");
+  const [refreshing, setRefreshing] = React.useState(false);
 
   const getCollectsByType = async (type, currency) => {
     let collects = await getAllCollectByType(type);
     setCollects(collects);
     setIsCollectLoading(false);
+    setRefreshing(false)
   };
 
   React.useEffect(() => {
@@ -136,6 +139,12 @@ function ReportScreen() {
     getCollectsByType(typeOfCollectSelected);
   }, [navigation]);
 
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setIsCollectLoading(true);
+    getCollectsByType(typeOfCollectSelected);
+  }, [typeOfCollectSelected]);
+
   const filterCollect = React.useCallback(
     async (text) => {
       if (text == "") getCollectsByType(typeOfCollectSelected);
@@ -155,7 +164,12 @@ function ReportScreen() {
       behavior={os === "ios" ? "padding" : "height-100"}
       className={`flex-1`}
     >
-      <ScrollView className={`flex w-full h-full ${os ? "mt-12" : ""}`}>
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+        className={`flex w-full h-full ${os ? "mt-12" : ""}`}
+      >
         <View className="flex-row justify-between items-center pb-3 px-5">
           <TouchableOpacity
             className={`w-1/3 rounded-full`}

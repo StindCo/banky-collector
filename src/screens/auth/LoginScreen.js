@@ -72,10 +72,10 @@ function LoginScreen() {
             className="w-[150px] h-[150px]"
           />
         </View>
-        <ScrollView>
-          <View className="flex items-center bg-white w-full h-full rounded-t-3xl border-t-2">
+        <View className=" bg-white w-full h-full rounded-t-3xl border-t-2">
+          <ScrollView>
             <View>
-              <Text className="text-lg font-semibold mt-10 font-[Poppins]">
+              <Text className="text-lg text-center font-semibold mt-10 font-[Poppins]">
                 Bienvenue !
               </Text>
             </View>
@@ -174,8 +174,8 @@ function LoginScreen() {
                 )}
               </Formik>
             </View>
-          </View>
-        </ScrollView>
+          </ScrollView>
+        </View>
       </View>
     </KeyboardAvoidingView>
   );

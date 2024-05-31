@@ -36,6 +36,7 @@ function ReviewScreen({ route, navigation }) {
           id_operation: Crypto.randomUUID(),
           goal,
           asset,
+          data5: "",
           data4: description ?? "",
           data3: userInfo ?? "",
           data2: user.id,
@@ -43,7 +44,7 @@ function ReviewScreen({ route, navigation }) {
           is_synchronized: 1,
         };
 
-        console.log(dataToSend);
+        // console.log(dataToSend);
 
         createCollect(dataToSend)
           .then(() => {
