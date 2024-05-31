@@ -9,6 +9,10 @@ import {
   ActivityIndicator,
 } from "react-native";
 import {
+  ArrowsRightLeftIcon,
+  CreditCardIcon,
+} from "react-native-heroicons/outline";
+import {
   ChevronLeftIcon,
   CurrencyDollarIcon,
 } from "react-native-heroicons/outline";
@@ -85,6 +89,25 @@ function ReviewCommitScreen({ route, navigation }) {
     setCollects(collects);
   };
 
+  const getCollectsData = (type) => {
+    let collectsFiltered = collects.filter((value) => value?.goal === type);
+    let usd = collectsFiltered.reduce((acc, collect) => {
+      if (collect.currency == "USD") {
+        return acc + parseFloat(collect.amount);
+      }
+      return acc + 0;
+    }, 0);
+
+    let cdf = collectsFiltered.reduce((acc, collect) => {
+      if (collect.currency == "CDF") {
+        return acc + parseFloat(collect.amount);
+      }
+      return acc + 0;
+    }, 0);
+
+    return { collects: collectsFiltered, usd, cdf };
+  };
+
   React.useEffect(() => {
     setCumulUSD(
       collects.reduce((acc, collect) => {
@@ -146,6 +169,65 @@ function ReviewCommitScreen({ route, navigation }) {
               typeOperation={"bwakisa carte"}
               currency={"CDF"}
             />
+
+            <View className="flex flex-row gap-4 mt-4  w-full items-start">
+              <View className="w-[30%] p-3 rounded bg-violet-600">
+                <View className="flex flex-row ">
+                  <Text className="text-white text-[10px]">Dépôt</Text>
+                  {/* <CreditCardIcon color={"#fff"} /> */}
+                </View>
+                <View className="flex flex-row space-x-2 items-center">
+                  <Text className="text-white font-[PoppinsBold] text-xl">
+                    {getCollectsData("D")?.collects?.length}
+                  </Text>
+                  <Text className="text-[9px] font-[Poppins] text-white">
+                    collectes
+                  </Text>
+                </View>
+                <Text className="text-gray-200 font-[Poppins] text-[10px] ">
+                  {getCollectsData("D")?.usd} USD
+                </Text>
+                <Text className="text-gray-200 font-[Poppins] text-[10px] ">
+                  {getCollectsData("D")?.cdf} CDF
+                </Text>
+              </View>
+
+              <View className="w-[30%] p-3 rounded bg-orange-700">
+                <Text className="text-white text-[10px]">Crédit</Text>
+                <View className="flex flex-row items-center">
+                  <Text className="text-white space-x-2 font-[PoppinsBold] text-xl">
+                    {getCollectsData("L")?.collects?.length}{" "}
+                  </Text>
+                  <Text className="text-[9px] font-[Poppins] text-white">
+                    collectes
+                  </Text>
+                </View>
+                <Text className="text-gray-200 font-[Poppins] text-[10px] ">
+                  {getCollectsData("L")?.usd} USD
+                </Text>
+                <Text className="text-gray-200 font-[Poppins] text-[10px] ">
+                  {getCollectsData("L")?.cdf} CDF
+                </Text>
+              </View>
+
+              <View className="w-[30%] p-3 rounded bg-emerald-600">
+                <Text className="text-white text-[10px]">Bwakisa carte</Text>
+                <View className="flex flex-row items-center">
+                  <Text className="text-white font-[PoppinsBold] text-xl">
+                    {getCollectsData("S")?.collects?.length}{" "}
+                  </Text>
+                  <Text className="text-[9px] font-[Poppins] text-white">
+                    collectes
+                  </Text>
+                </View>
+                <Text className="text-gray-200 font-[Poppins] text-[10px] ">
+                  {getCollectsData("S")?.usd} USD
+                </Text>
+                <Text className="text-gray-200 font-[Poppins] text-[10px] ">
+                  {getCollectsData("S")?.cdf} CDF
+                </Text>
+              </View>
+            </View>
 
             <View className="mt-8 px-5">
               <TouchableOpacity

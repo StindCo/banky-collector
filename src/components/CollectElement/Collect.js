@@ -29,6 +29,10 @@ export default function Collect({ collect, bgStyle }) {
 
   const [visibleError, setVisibleError] = useState(false);
 
+  const toggleErrorDialog = () => {
+    setVisibleError(!visibleError);
+  };
+
   const printToFile = async () => {
     // On iOS/android prints the given html. On web prints the HTML from the current page.
     setIsPrinting(true);
@@ -51,9 +55,7 @@ export default function Collect({ collect, bgStyle }) {
     setVisible(!visible);
   };
 
-  const toggleErrorDialog = () => {
-    setVisibleError(!visibleError);
-  };
+
 
   return (
     <>
