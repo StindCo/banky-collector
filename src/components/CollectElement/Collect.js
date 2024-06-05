@@ -5,6 +5,7 @@ import { BottomSheet, Dialog } from "@rneui/base";
 import generateTemplate from "../../utils/ExportTicketDePerception";
 import * as Print from "expo-print";
 import { useSelector } from "react-redux";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { updateCollect } from "../../services/CollectorService";
 
 const moment = require("moment");
@@ -13,7 +14,7 @@ export const getSelectedOperationTextByTag = (tag) => {
   if (tag == "saving") return "Epargne";
   else if (tag == "S") return "Bwakisa carte";
   else if (tag == "L") return "Crédit";
-  else if (tag == "D") return "Dépot";
+  else if (tag == "D") return "Dépôt";
 };
 
 export default function Collect({ collect, bgStyle }) {
@@ -55,8 +56,6 @@ export default function Collect({ collect, bgStyle }) {
     setVisible(!visible);
   };
 
-
-
   return (
     <>
       <TouchableOpacity
@@ -66,7 +65,21 @@ export default function Collect({ collect, bgStyle }) {
         <View className="w-3/5 flex-row space-x-4 items-center">
           <View className="flex w-18 pl-2 items-center justify-center">
             <View>
-              <BanknotesIcon size={25} color={"#166534"} />
+              {collect.data5 == "" ? (
+                <MaterialCommunityIcons
+                  name={"credit-card-check-outline"}
+                  size={30}
+                  color="#166534"
+                  // onPress={}
+                />
+              ) : (
+                <MaterialCommunityIcons
+                  name={"alert-octagram-outline"}
+                  size={30}
+                  color="#ef4444"
+                  // onPress={}
+                />
+              )}
             </View>
           </View>
           <View className="space-y-1 text-left w-4/5">
@@ -227,7 +240,7 @@ export default function Collect({ collect, bgStyle }) {
                 }}
                 className="bg-red-600 w-1/2 rounded p-2"
               >
-                <Text className="text-white text-xs font-[Poppins] text-center">
+                <Text className="text-white text-[10px] font-[Poppins] text-center">
                   Enregister
                 </Text>
               </TouchableOpacity>
@@ -246,7 +259,7 @@ export default function Collect({ collect, bgStyle }) {
                 }}
                 className="bg-orange-600 w-1/2 rounded p-2"
               >
-                <Text className="text-white text-xs px-5 font-[Poppins] text-center">
+                <Text className="text-white text-[10px] px-5 font-[Poppins] text-center">
                   Supprimer
                 </Text>
               </TouchableOpacity>

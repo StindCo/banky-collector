@@ -40,11 +40,11 @@ function ReviewScreen({ route, navigation }) {
           data4: description ?? "",
           data3: userInfo ?? "",
           data2: user.id,
-          data1: date ?? new Date().toISOString(),
+          data1: moment(date !== null ? new Date(date) : new Date()).format(
+            "YYYY-MM-DD"
+          ),
           is_synchronized: 1,
         };
-
-        // console.log(dataToSend);
 
         createCollect(dataToSend)
           .then(() => {

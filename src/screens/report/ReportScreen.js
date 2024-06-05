@@ -214,7 +214,7 @@ function ReportScreen() {
                 typeOfCollectSelected == "D" ? "text-white" : "text-indigo-950"
               }`}
             >
-              Dépot
+              Dépôt
             </Text>
           </TouchableOpacity>
 
@@ -289,7 +289,7 @@ function ReportScreen() {
 
             <ScrollView>
               <View className="space-y-4 px-7">
-                <View className="flex flex-row justify-between items-center">
+                <View className={`flex flex-row justify-between items-center ${onSearch && collectsFiltered.length === 0 && "mb-16"}`}>
                   <Text className="text-md font-[Poppins] font-semibold">
                     Liste de collectes
                   </Text>

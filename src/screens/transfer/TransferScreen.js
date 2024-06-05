@@ -340,7 +340,7 @@ function TransferScreen() {
                   }
                   value={accountToNumber}
                   className="h-[45px] border rounded-lg my-3 px-3 w-full border-gray-300 text-gray-800"
-                  placeholder="Inserer le numéro de compte du destinataire"
+                  placeholder="Insérer le numéro de compte du destinataire"
                 />
                 {isAccountLoading ? (
                   <ActivityIndicator />

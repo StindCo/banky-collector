@@ -34,7 +34,7 @@ export const getSelectedOperationTextByTag = (tag) => {
   if (tag == "saving") return "Epargne";
   else if (tag == "S") return "Bwakisa carte";
   else if (tag == "L") return "Crédit";
-  else if (tag == "D") return "Dépot";
+  else if (tag == "D") return "Dépôt";
 };
 
 function CollectForm({ route }) {
@@ -101,7 +101,7 @@ function CollectForm({ route }) {
           values,
         }) => (
           <>
-            <View className="flex-1 mt-[20%] px-5">
+            <ScrollView className="flex-1 mt-[20%] px-5">
               <View className="py-2 border-b border-gray-200 pb-3">
                 <Text className="text-base font-[Poppins] text-center font-semibold">
                   Nouvelle collecte: {"  "}
@@ -110,7 +110,7 @@ function CollectForm({ route }) {
                   </Text>
                 </Text>
               </View>
-              <ScrollView>
+              <ScrollView className="pb-6">
                 <View className="w-full mt-5 space-y-8 px-5">
                   <View className="space-y-3">
                     <View className="flex-row justify-between w-full">
@@ -121,7 +121,7 @@ function CollectForm({ route }) {
                         <TextInput
                           onChangeText={handleChange("amount")}
                           defaultValue={values.amount}
-                          placeholder="Inserer le montant"
+                          placeholder="Insérer le montant"
                           className="text-sm border-b border-gray-400 pb-2 font-[Poppins]"
                           keyboardType="number-pad"
                         />
@@ -138,7 +138,7 @@ function CollectForm({ route }) {
                           <RNPickerSelect
                             onValueChange={handleChange("currency")}
                             items={[
-                              { label: "Dollars américain", value: "USD" },
+                              { label: "Dollar americain", value: "USD" },
                               { label: "Francs congolais", value: "CDF" },
                             ]}
                           >
@@ -172,8 +172,8 @@ function CollectForm({ route }) {
                           }
                           placeholder={
                             typeOperation == "S"
-                              ? "Inserer numéro carte Bwakisa carte"
-                              : "Inserer numéro de compte"
+                              ? "Insérer numéro carte Bwakisa carte"
+                              : "Insérer numéro de compte"
                           }
                           className="text-sm border-b  border-gray-400 pb-2"
                         />
@@ -201,7 +201,7 @@ function CollectForm({ route }) {
                         <TextInput
                           onChangeText={handleChange("userInfo")}
                           defaultValue={values.userInfo}
-                          placeholder="Inserer la description ..."
+                          placeholder="Insérer la description ..."
                           className="text-sm border-b border-gray-400 pb-2"
                         />
                         <Text className="text-red-700">
@@ -218,7 +218,7 @@ function CollectForm({ route }) {
                         <TextInput
                           onChangeText={handleChange("description")}
                           defaultValue={values.description}
-                          placeholder="Inserer la description ..."
+                          placeholder="Insérer la description ..."
                           className="text-sm border-b border-gray-400 pb-5"
                         />
                         <Text className="text-red-700">
@@ -270,7 +270,7 @@ function CollectForm({ route }) {
                   onCancel={hideToDatePicker}
                 />
               </View>
-            </View>
+            </ScrollView>
 
             <Dialog
               overlayStyle={{

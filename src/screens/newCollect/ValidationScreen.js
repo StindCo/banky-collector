@@ -26,7 +26,7 @@ function ValidationScreen({ route, navigation }) {
     try {
       const html = await generateTemplate(params.data, user);
       setIsPrinting(false);
-      const { uri } = await Print.printAsync({
+     await Print.printAsync({
         html,
         base64: true,
         width: 612,

@@ -21,7 +21,7 @@ const getSelectedOperationTextByTag = (tag) => {
   if (tag == "saving") return "Epargne";
   else if (tag == "S") return "Bwakisa carte";
   else if (tag == "L") return "Crédit";
-  else if (tag == "D") return "Dépot";
+  else if (tag == "D") return "Dépôt";
 };
 
 function Card(props) {

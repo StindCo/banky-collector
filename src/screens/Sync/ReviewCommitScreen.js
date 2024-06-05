@@ -196,7 +196,7 @@ function ReviewCommitScreen({ route, navigation }) {
                 <Text className="text-white text-[10px]">Crédit</Text>
                 <View className="flex flex-row items-center">
                   <Text className="text-white space-x-2 font-[PoppinsBold] text-xl">
-                    {getCollectsData("L")?.collects?.length}{" "}
+                    {getCollectsData("L")?.collects?.length ?? 0}{" "}
                   </Text>
                   <Text className="text-[9px] font-[Poppins] text-white">
                     collectes

@@ -78,12 +78,12 @@ function HomeScreen({ route }) {
             {/* <Text className="text-base font-[Poppins] text-white">Accueil</Text> */}
           </View>
           <View>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               className="mr-2"
               onPress={() => navigation.navigate("Notification")}
             >
               <Icon name="bell" color={"white"} type="feather" />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         </View>
         <View className=" px-5 py-5 mb-6 space-y-1 ">
@@ -116,7 +116,7 @@ function HomeScreen({ route }) {
                 color="#7c3aed"
               />
               <Text className="text-violet-600 font-[Poppins] text-center font-medium">
-                Dépot Cash
+                Dépôt Cash
               </Text>
             </TouchableOpacity>
             <TouchableOpacity

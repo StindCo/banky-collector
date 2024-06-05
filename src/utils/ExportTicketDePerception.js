@@ -7,7 +7,7 @@ export const getSelectedOperationTextByTag = (tag) => {
   if (tag == "saving") return "Epargne";
   else if (tag == "S") return "Bwakisa carte";
   else if (tag == "L") return "Crédit";
-  else if (tag == "D") return "Dépot";
+  else if (tag == "D") return "Dépôt";
 };
 
 async function generateHearder(data, user) {
@@ -28,28 +28,26 @@ async function generateHearder(data, user) {
 
 <br />
 
-<h1 style="text-align:center; padding-bottom:0px; font-size:28px;">${
+<h1 style="text-align:center; padding-bottom:0px; font-size:40px;">${
     user.platform?.name
   }</h1>
-<h1 style="text-align:center; margin:0; padding-bottom:10px; font-size:20px;">${
+<h1 style="text-align:center; margin:0; padding-bottom:10px; font-size:30px;">${
     user.partition?.name
   }</h1>
-<div style="text-align:center; margin:0; padding-bottom:20px; font-size:15px;  border-bottom: 1px solid #aaa">${
+<div style="text-align:center; margin:0; padding-bottom:20px; font-size:28px;  border-bottom: 1px solid #aaa">${
     user.partition?.address
   }</div>
-<h1 style="text-align:center; padding-bottom:5px; font-size:16px;">${
-    user.business_role?.label
-  }</h1>
+<p style="text-align:center; padding-bottom:5px; font-size:25px;">Agent collecteur</p>
 
-<h1 style="text-align:center; padding-bottom:20px; font-size:18px; border-bottom: 2px solid #aaa">${
+<h1 style="text-align:center; padding-bottom:20px; font-size:28px; border-bottom: 2px solid #aaa">${
     user?.displayName
   }</h1>
 
 
-   <h2 style="text-align:center; font-size:16px">${moment(new Date()).format(
+   <h2 style="text-align:center; font-size:25px">${moment(new Date()).format(
      "DD/MM/YY HH:mm"
    )}</h2>
-  <div style="text-align:center; padding-bottom:20px; font-size:28px;"> ${getSelectedOperationTextByTag(
+  <div style="text-align:center; margin-bottom: 20px; padding-bottom:20px; font-size:45px;"> ${getSelectedOperationTextByTag(
     data.goal
   )}</div>
 
@@ -65,41 +63,44 @@ style="
   <div style="display:flex; font-size: 20px; align-items: center; justify-content: space-between; ">
       <div style="width:100%">
         <div style="display: flex; font-size:25px; justify-content: space-between; align-items:center;margin-bottom: 10px">
-            <div>Numéro de compte :</div>
-            <div style="font-weight: bold; text-align: right">${
+            <div>Numéro de compte : <span style="font-weight: bold; font-size: 28px; margin-left: 10px"> ${
               data.asset
-            }</div>
+            }
+            </span> </div>
           </div>
 
           <div style="display: flex; font-size:25px; justify-content: space-between; align-items: center;margin-bottom: 10px">
-            <div>Montant :  </div>
-            <div style="font-size:38px; font-weight: bold">${data.amount}</div>
+            <div>Montant :  <span style="font-weight: bold; font-size: 28px; margin-left: 10px"> ${
+              data.amount
+            }
+            </span>  </div>
           </div>
 
           <div style="display: flex; font-size:25px; justify-content: space-between; align-items:center; margin-bottom: 10px">
-            <div  >Devise :</div>
-            <div style="font-weight: bold; text-align: right">${
+            <div >Devise : <span style="font-weight: bold; font-size: 28px; margin-left: 10px">  ${
               data?.currency
-            }</div>
+            }
+            </span></div>
           </div>
+
           <div style="display: flex; font-size:25px; justify-content: space-between;  align-items:center; margin-bottom: 10px">
-            <div  >Description :</div>
-            <div style="font-weight: bold; text-align: right">${
-              data?.data4 == "" ? "-" : data?.data4
-            }</div>
-          </div>
-          <div style="display: flex; font-size:25px; justify-content: space-between;  align-items:center; margin-bottom: 10px">
-          <div  >Informations sur le client :</div>
-          <div style="font-weight: bold; text-align: right">${
+          <div  >Contact :  <span style="font-weight: bold; font-size: 28px; margin-left: 10px">  ${
             data?.data3 == "" ? "-" : data?.data3
-          }</div>
+          }</span></div>
+
         </div>
           <div style="display: flex; font-size:25px; justify-content: space-between; align-items:center; margin-bottom: 10px">
-          <div>Date :</div>
-          <div style="font-weight: bold; text-align: right">${moment(
+          <div>Date :  <span style="font-weight: bold; font-size: 28px; margin-left: 10px">  ${moment(
             data?.data?.data1
-          ).format("DD-MM-YYYY HH:mm")}</div>
+          ).format("DD-MM-YYYY HH:mm")}</span></div>
+
         </div>
+
+        <div style="display: flex; font-size:25px; justify-content: space-between;  align-items:center; margin-bottom: 10px">
+            <div  >Description :  <span style="font-weight: bold; font-size: 28px; margin-left: 10px">  ${
+              data?.data4 == "" ? "-" : data?.data4
+            } </span></div>
+          </div>
       </div>
   </div>
 
@@ -109,10 +110,13 @@ style="
 <br />
 <br />
 <br />
+<div style="text-align: center; font-size: 30px">Merci beaucoup !!!</div>
 <br />
 <br />
 
     <br />
+
+    <div style="text-align: center; font-size: 38px">***************************</div>
 
     `;
 }
