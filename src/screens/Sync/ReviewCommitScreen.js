@@ -6,30 +6,17 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   ScrollView,
-  ActivityIndicator,
 } from "react-native";
 import {
-  ArrowsRightLeftIcon,
-  CreditCardIcon,
-} from "react-native-heroicons/outline";
-import {
   ChevronLeftIcon,
-  CurrencyDollarIcon,
 } from "react-native-heroicons/outline";
 import { useState } from "react";
-import { useSelector } from "react-redux";
-import { getSelectedOperationTextByTag } from "../home/HomeScreen";
-import moment from "moment";
 import {
   apiSyncData,
   clearCollect,
-  createCollect,
   getAllCollects,
 } from "../../services/CollectorService";
-import * as Crypto from "expo-crypto";
 import Card from "../../components/Card/Card";
-import { getAllByFilter } from "../../utils/CollectsUtils";
-import axios from "axios";
 
 function ReviewCommitScreen({ route, navigation }) {
   const os = Platform.OS;
@@ -196,7 +183,7 @@ function ReviewCommitScreen({ route, navigation }) {
                 <Text className="text-white text-[10px]">Crédit</Text>
                 <View className="flex flex-row items-center">
                   <Text className="text-white space-x-2 font-[PoppinsBold] text-xl">
-                    {getCollectsData("L")?.collects?.length ?? 0}{" "}
+                    {`${getCollectsData("L")?.collects.length}`} {" "}
                   </Text>
                   <Text className="text-[9px] font-[Poppins] text-white">
                     collectes

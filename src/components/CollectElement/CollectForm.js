@@ -13,19 +13,22 @@ const moment = require("moment");
 
 import { useNavigation } from "@react-navigation/core";
 import { useState } from "react";
-import { useSelector } from "react-redux";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 import * as Yup from "yup";
-import { apiGetAccountsOfUser } from "../../services/AccountServices";
 import { Formik } from "formik";
-import { ChevronDownIcon } from "react-native-heroicons/outline";
+import {
+  ChevronDownIcon,
+  ChevronLeftIcon,
+} from "react-native-heroicons/outline";
 import { Dialog } from "@rneui/base";
 import ScanQrCode from "./ScanQrCode";
+import { useToast } from "react-native-toast-notifications";
 
 const validationSchema = Yup.object().shape({
   currency: Yup.string().required("Veuillez renseigner la devise"),
   amount: Yup.string().required("Veuillez renseigner le montant"),
+  customerName: Yup.string().required("Veuillez renseigner le nom du client"),
   asset: Yup.string().required("Veuillez renseigner le compte concerné"),
   description: Yup.string().max(365, "Veuillez renseigner la description"),
 });
@@ -41,6 +44,7 @@ function CollectForm({ route }) {
   const os = Platform.OS;
   const { typeOperation } = route.params;
   const navigation = useNavigation();
+  const toast = useToast();
   const [isToDatePickerVisible, setToDatePickerVisibility] = useState(false);
   const [toDate, setToDate] = useState(null);
   const [disableSubmit, setDisableSubmit] = useState(false);
@@ -79,6 +83,7 @@ function CollectForm({ route }) {
           currency: "USD",
           asset: "",
           amount: "",
+          customerName: "",
           description: "",
           userInfo: "",
         }}
@@ -101,11 +106,17 @@ function CollectForm({ route }) {
           values,
         }) => (
           <>
-            <ScrollView className="flex-1 mt-[20%] px-5">
-              <View className="py-2 border-b border-gray-200 pb-3">
-                <Text className="text-base font-[Poppins] text-center font-semibold">
+            <ScrollView className="flex-1 mt-[15%] px-5">
+              <View className="py-2 flex-row items-center space-x-3 border-b border-gray-200 pb-3">
+                <TouchableOpacity
+                  onPress={() => navigation.goBack()}
+                  className="p-1 border border-[#1e1b4b] rounded-xl"
+                >
+                  <ChevronLeftIcon size={20} color={"#1e1b4b"} />
+                </TouchableOpacity>
+                <Text className="text-[12px] items-center font-[Poppins] text-center font-semibold">
                   Nouvelle collecte: {"  "}
-                  <Text className="font-[PoppinsBold]">
+                  <Text className="font-[PoppinsBold]  text-base">
                     {getSelectedOperationTextByTag(typeOperation)}
                   </Text>
                 </Text>
@@ -113,6 +124,23 @@ function CollectForm({ route }) {
               <ScrollView className="pb-6">
                 <View className="w-full mt-5 space-y-8 px-5">
                   <View className="space-y-3">
+                    <View className="w-full">
+                      <View className="w-full space-y-1">
+                        <Text className="text-gray-600 text-xs font-[Poppins]">
+                          Nom du client
+                        </Text>
+                        <TextInput
+                          onChangeText={handleChange("customerName")}
+                          defaultValue={values.customerName}
+                          placeholder="Insérer le nom complet ..."
+                          className="text-sm border-b border-gray-400 pb-2"
+                        />
+                        <Text className="text-red-700 text-[10px] mb-1">
+                          {touched.customerName && errors.customerName}
+                        </Text>
+                      </View>
+                    </View>
+
                     <View className="flex-row justify-between w-full">
                       <View className="w-3/4 0 space-y-2">
                         <Text className="text-gray-600 text-xs font-[Poppins]">
@@ -126,7 +154,7 @@ function CollectForm({ route }) {
                           keyboardType="number-pad"
                         />
 
-                        <Text className="text-red-700">
+                        <Text className="text-red-700 text-[10px] mb-1">
                           {touched.amount && errors.amount}
                         </Text>
                       </View>
@@ -177,7 +205,7 @@ function CollectForm({ route }) {
                           }
                           className="text-sm border-b  border-gray-400 pb-2"
                         />
-                        <Text className="text-red-700">
+                        <Text className="text-red-700 text-[10px] mb-1">
                           {touched.asset && errors.asset}
                         </Text>
                         <View className="absolute bottom-8 right-2">
@@ -204,7 +232,7 @@ function CollectForm({ route }) {
                           placeholder="Insérer la description ..."
                           className="text-sm border-b border-gray-400 pb-2"
                         />
-                        <Text className="text-red-700">
+                        <Text className="text-red-700 text-[10px] mb-1">
                           {touched.userInfo && errors.userInfo}
                         </Text>
                       </View>
@@ -221,7 +249,7 @@ function CollectForm({ route }) {
                           placeholder="Insérer la description ..."
                           className="text-sm border-b border-gray-400 pb-5"
                         />
-                        <Text className="text-red-700">
+                        <Text className="text-red-700 text-[10px] mb-1">
                           {touched.description && errors.description}
                         </Text>
                       </View>
@@ -247,7 +275,7 @@ function CollectForm({ route }) {
                             </Text>
                             <ChevronDownIcon size={14} color={"#000"} />
                           </TouchableOpacity>
-                          <Text className="text-red-700"></Text>
+                          <Text className="text-red-700 text-[10px] mb-1"></Text>
                         </View>
                       </View>
                     )}
@@ -286,7 +314,18 @@ function CollectForm({ route }) {
 
                 <View>
                   <ScanQrCode
-                    handle={(value) => setFieldValue("asset", value)}
+                    handle={(value) => {
+                      try {
+                        let data = JSON.parse(value);
+                        setFieldValue("asset", data?.asset);
+                        setFieldValue("currency", data?.currency);
+                        setFieldValue("customerName", data?.name);
+                      } catch (error) {
+                        toast.show("Format du code Qr non pris en charge", {
+                          type: "cmb_error",
+                        });
+                      }
+                    }}
                     setClose={setVisibleError}
                   />
                 </View>

@@ -95,13 +95,12 @@ function HomeScreen({ route }) {
           </View>
         </View>
 
-
         <ScrollView className="bg-white rounded-t-[20px]">
           <View className="mt-8 px-6 space-y-8 mb-8">
             <Text className=" font-[Poppins]">Que voulez-vous collecter ?</Text>
           </View>
 
-          <View className=" flex-row justify-between space-x-2 px-6 mb-8">
+          <View className=" flex-row justify-between space-x-2 px-5 mb-8">
             <TouchableOpacity
               className="h-28 w-40 border-2 border-gray-200 justify-center space-y-2 items-center rounded-lg  shadow-lg bg-slate-50"
               onPress={() =>
@@ -131,7 +130,7 @@ function HomeScreen({ route }) {
               </Text>
             </TouchableOpacity>
           </View>
-          <View className="flex-row justify-between space-x-2 px-6">
+          <View className="flex-row justify-between space-x-2 px-5">
             <TouchableOpacity
               className="h-28 w-40 border-2 border-gray-200 justify-center space-y-2 items-center rounded-lg  shadow-lg bg-slate-50"
               onPress={() =>

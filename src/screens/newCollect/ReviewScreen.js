@@ -19,8 +19,16 @@ import * as Crypto from "expo-crypto";
 function ReviewScreen({ route, navigation }) {
   const os = Platform.OS;
 
-  const { currency, date, userInfo, amount, goal, asset, description } =
-    route.params;
+  const {
+    currency,
+    date,
+    userInfo,
+    customerName,
+    amount,
+    goal,
+    asset,
+    description,
+  } = route.params;
 
   const [finalSolde, setFinalSolde] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -36,13 +44,14 @@ function ReviewScreen({ route, navigation }) {
           id_operation: Crypto.randomUUID(),
           goal,
           asset,
-          data5: "",
-          data4: description ?? "",
-          data3: userInfo ?? "",
-          data2: user.id,
           data1: moment(date !== null ? new Date(date) : new Date()).format(
             "YYYY-MM-DD"
           ),
+          data2: user.id,
+          data3: userInfo ?? "", // Customer contact - email or password
+          data4: description ?? "",
+          data5: "", // Error
+          data6: customerName ?? "",
           is_synchronized: 1,
         };
 
@@ -134,25 +143,29 @@ function ReviewScreen({ route, navigation }) {
                 <View className="flex flex-row mb-3 items-center justify-between">
                   <View className="">
                     <Text className="font-[Poppins] text-xs text-left ">
-                      Informations sur le client
+                      Nom du client
                     </Text>
                   </View>
                   <View>
                     <Text className="font-[Poppins] w-32 text-right text-xs">
-                      {userInfo}
+                      {customerName}
                     </Text>
                   </View>
                 </View>
+
                 <View className="flex flex-row mb-3 items-center justify-between">
                   <View className="">
-                    <Text className="font-[Poppins] text-left ">Motif</Text>
+                    <Text className="font-[Poppins] text-xs text-left ">
+                      Contact
+                    </Text>
                   </View>
                   <View>
                     <Text className="font-[Poppins] w-32 text-right text-xs">
-                      {description}
+                      {userInfo ?? "-"}
                     </Text>
                   </View>
                 </View>
+
                 <View className="flex flex-row items-center justify-between">
                   <View className="">
                     <Text className="font-[Poppins] text-left ">
@@ -162,6 +175,17 @@ function ReviewScreen({ route, navigation }) {
                   <View>
                     <Text className="font-[PoppinsBold] text-sm ">
                       {amount} {currency}
+                    </Text>
+                  </View>
+                </View>
+
+                <View className="flex flex-row mb-3 items-center justify-between">
+                  <View className="">
+                    <Text className="font-[Poppins] text-left ">Motif</Text>
+                  </View>
+                  <View>
+                    <Text className="font-[Poppins] w-32 text-right text-xs">
+                      {description}
                     </Text>
                   </View>
                 </View>

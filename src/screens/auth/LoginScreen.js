@@ -7,7 +7,6 @@ import {
   Platform,
   TextInput,
   TouchableOpacity,
-  SafeAreaView,
   ScrollView,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";

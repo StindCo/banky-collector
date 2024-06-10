@@ -62,6 +62,12 @@ style="
 <div style="width: 100%">
   <div style="display:flex; font-size: 20px; align-items: center; justify-content: space-between; ">
       <div style="width:100%">
+       <div style="display: flex; font-size:25px; justify-content: space-between;  align-items:center; margin-bottom: 10px">
+          <div>Nom du client :  <span style="font-weight: bold; font-size: 28px; margin-left: 10px">  ${
+            data?.data6 == "" ? "-" : data?.data6
+          }</span></div>
+
+        </div>
         <div style="display: flex; font-size:25px; justify-content: space-between; align-items:center;margin-bottom: 10px">
             <div>Numéro de compte : <span style="font-weight: bold; font-size: 28px; margin-left: 10px"> ${
               data.asset
@@ -83,8 +89,11 @@ style="
             </span></div>
           </div>
 
+
+
+
           <div style="display: flex; font-size:25px; justify-content: space-between;  align-items:center; margin-bottom: 10px">
-          <div  >Contact :  <span style="font-weight: bold; font-size: 28px; margin-left: 10px">  ${
+          <div>Contact :  <span style="font-weight: bold; font-size: 28px; margin-left: 10px">  ${
             data?.data3 == "" ? "-" : data?.data3
           }</span></div>
 

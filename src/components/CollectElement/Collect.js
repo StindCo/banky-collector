@@ -84,10 +84,12 @@ export default function Collect({ collect, bgStyle }) {
           </View>
           <View className="space-y-1 text-left w-4/5">
             <Text className="font-[PoppinsBold] text-xs text-gray-700 text-left">
-              {collectSelected.asset}
+              {collectSelected.data6}
             </Text>
-            <Text className="text-[9px] font-[Poppins] text-gray-600">
-              {moment(collectSelected.data1).format("DD-MM-YYYY HH:mm")}
+            <Text className="text-[9px] flex-row space-x-2 font-[Poppins] text-gray-600">
+              <Text className="">
+                {collectSelected?.asset}
+              </Text>{" "}
             </Text>
           </View>
         </View>
@@ -117,6 +119,15 @@ export default function Collect({ collect, bgStyle }) {
                 </Text>
                 <Text className="text-[10px] font-[PoppinsBold]">
                   {getSelectedOperationTextByTag(collectSelected?.goal)}
+                </Text>
+              </View>
+
+              <View className="flex flex-row items-center">
+                <Text className="text-[10px] w-2/4 font-[Poppins]">
+                  Nom du client :{" "}
+                </Text>
+                <Text className="text-[10px] font-[PoppinsBold]">
+                  {collectSelected?.data6}
                 </Text>
               </View>
 
