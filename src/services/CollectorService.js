@@ -61,8 +61,9 @@ export const getAllCollectByTypeAndQuery = async (type, query) => {
     return collectsInJSON.filter(
       (value) =>
         value.goal == type &&
-        (value.asset.toLowerCase().includes(queryText) ||
-          value.data3.toLowerCase().includes(queryText))
+        (value.asset.toLowerCase().includes(queryText.toLowerCase()) ||
+          value.data3.toLowerCase().includes(queryText.toLowerCase()) ||
+          value.data6.toLowerCase().includes(queryText.toLowerCase()))
     );
   } catch (e) {
     // error reading value
