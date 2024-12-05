@@ -82,8 +82,8 @@ function LoginScreen() {
               <Formik
                 // Remove this initial value
                 initialValues={{
-                  userName: "SC23090718410013",
-                  password: "87654321",
+                  userName: "",
+                  password: "",
                 }}
                 validationSchema={validationSchema}
                 onSubmit={(values, { setSubmitting }) => {

@@ -1,27 +1,13 @@
 import * as React from "react";
-import {
-  HomeScreen,
-  LoginScreen,
-  NotificationScreen,
-  SettingsScreen,
-} from "../index";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import {
-  Cog6ToothIcon,
-  HomeIcon,
-  WalletIcon,
-} from "react-native-heroicons/solid";
-import { Platform, View } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
-import { apiGetAccountProfiles } from "../services/operationsProfile";
-import { loadAccountProfiles } from "../store/Account/accountSlice";
+import {HomeScreen, LoginScreen, NotificationScreen, SettingsScreen,} from "../index";
+import {createNativeStackNavigator} from "@react-navigation/native-stack";
+import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
+import {Platform, View} from "react-native";
+import {useDispatch, useSelector} from "react-redux";
+import {apiGetAccountProfiles} from "../services/operationsProfile";
+import {loadAccountProfiles} from "../store/Account/accountSlice";
 import ChangePasswordScreen from "../screens/settings/ChangePasswordScreen";
-import {
-  DocumentChartBarIcon,
-  PlusIcon,
-  QrCodeIcon,
-} from "react-native-heroicons/outline";
+import {DocumentChartBarIcon, PlusIcon, QrCodeIcon,} from "react-native-heroicons/outline";
 import ReportScreen from "../screens/report/ReportScreen";
 import SyncScreen from "../screens/Sync/SyncScreen";
 import ReviewScreen from "../screens/newCollect/ReviewScreen";
@@ -29,6 +15,7 @@ import ValidationScreen from "../screens/newCollect/ValidationScreen";
 import CollectForm from "../components/CollectElement/CollectForm";
 import ReviewCommitScreen from "../screens/Sync/ReviewCommitScreen";
 import ValidationCommitScreen from "../screens/Sync/ValidationCommitScreen";
+import TirageScreen from "../screens/home/TirageScreen";
 
 const Stack = createNativeStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -103,6 +90,7 @@ function Screens() {
             component={ValidationCommitScreen}
           />
           <Stack.Screen name="Validation" component={ValidationScreen} />
+          <Stack.Screen name="Tirage" component={TirageScreen}/>
           <Stack.Screen name="Setting" component={SettingsScreen} />
           <Stack.Screen
             name="CollectForm"

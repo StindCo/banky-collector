@@ -1,5 +1,5 @@
 const appConfig = {
-    apiPrefix: 'https://api.kurrency.demo.e-makuta.com/api',
+    apiPrefix: 'https://nimale.banky.pro/api',
     authenticatedEntryPath: '/app',
     otpVerificationPath: '/otp-verify',
     unAuthenticatedEntryPath: 'Login',
